@@ -9,4 +9,5 @@ const validatorEnv = (env, name)=>{
 
 export const config = {
     port: validatorEnv(process.env.PORT, 'PORT'),
+    mongo: validatorEnv(process.env.MONGODB_URI, 'MONGODB_URI'),
 }
