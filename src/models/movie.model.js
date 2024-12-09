@@ -23,12 +23,6 @@ const movieSchema = new Schema(
                 ref: 'Review'
             }
         ],
-        starts:[
-            {
-                user:{ type: Schema.Types.ObjectId, ref: 'User' },
-                starts: { type: Number, min: 1, max: 5 },
-            }
-        ],
         image:{
             type: String,
             required: true,
