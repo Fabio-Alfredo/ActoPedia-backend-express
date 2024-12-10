@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
-import { config } from "../configs/config";
-import {hash, compare} from 'bcryptjs';
+import { config } from "../configs/config.js";
+import bcrypct from 'bcryptjs';
 
 
 const userSchema = new Schema(
@@ -38,13 +38,13 @@ const userSchema = new Schema(
 
 userSchema.pre('save', async function(next){
     if(this.isModified('password')){
-        this.password = await hash(this.password, parseInt(config.salt));
+        this.password = await bcrypct.hash(this.password, parseInt(config.salt));
     }
     next();
 });
 
 userSchema.methods.comparePassword = async function(password){
-    return await compare(password, this.password);  
+    return await bcrypct.compare(password, this.password);  
 }
 
 const User = model('User', userSchema);
