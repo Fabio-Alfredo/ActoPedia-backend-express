@@ -1,6 +1,6 @@
 export class ServiceError extends Error{
-    constructor(message){
-        super(message)
-        this.name = 'ServiceError'
+    constructor(message, code){
+        super(message);
+        this.code = code;
     }
 }
