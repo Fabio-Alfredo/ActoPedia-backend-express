@@ -5,11 +5,18 @@ import { ServiceError } from "../errors/ServiceError.error.js";
 export const createUser = async (user) => {
   try {
     const existingUser = await userRepository.getUserByEmail(user.email);
-    if(existingUser) throw new ServiceError( 'User already exists', errorCodes.USER.ALREADY_EXISTS);
+    if (existingUser)
+      throw new ServiceError(
+        "User already exists",
+        errorCodes.USER.ALREADY_EXISTS
+      );
 
     const newUser = await userRepository.createUser(user);
     return newUser;
   } catch (e) {
-    throw new ServiceError('Internal server error while creating user', errorCodes.USER.NOT_FOUND);
+    throw new ServiceError(
+      e.message || "Internal server error while creating user",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
   }
 };
