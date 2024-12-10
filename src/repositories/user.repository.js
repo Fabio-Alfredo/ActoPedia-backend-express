@@ -6,3 +6,6 @@ export const createUser = async (user)=>{
     return newUser.save();
 }
 
+export const getUserByEmail = async (email)=>{
+    return User.findOne({email});
+}
