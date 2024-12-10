@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 import { config } from "../configs/config";
+import {hash, compare} from 'bcryptjs';
+
 
 const userSchema = new Schema(
     {
@@ -33,6 +35,17 @@ const userSchema = new Schema(
         timestamps: true,
     }
 );
+
+userSchema.pre('save', async function(next){
+    if(this.isModified('password')){
+        this.password = await hash(this.password, parseInt(config.salt));
+    }
+    next();
+});
+
+userSchema.methods.comparePassword = async function(password){
+    return await compare(password, this.password);  
+}
 
 const User = model('User', userSchema);
 
