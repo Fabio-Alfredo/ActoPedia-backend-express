@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { config } from "../configs/config";
 
 const userSchema = new Schema(
     {
@@ -21,7 +22,12 @@ const userSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'Review'
             }
-        ]
+        ],
+        role:[{
+            type:String,
+            enum: config.roles,
+            default: config.defaultRole,
+        }]
     },
     {
         timestamps: true,
