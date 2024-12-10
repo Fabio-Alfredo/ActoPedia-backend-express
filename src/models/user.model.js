@@ -25,11 +25,11 @@ const userSchema = new Schema(
                 ref: 'Review'
             }
         ],
-        role:[{
-            type:String,
+        role:{
+            type:[String],
             enum: config.roles,
             default: config.defaultRole,
-        }]
+        }
     },
     {
         timestamps: true,
