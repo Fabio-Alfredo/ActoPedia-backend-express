@@ -32,3 +32,16 @@ export const registerValidator = [
     .withMessage("Review must be a valid mongo id")
     .bail(),
 ];
+
+export const loginValidator = [
+  body("identifier")
+    .trim()
+    .notEmpty()
+    .withMessage("Username or email is required")
+    .bail(),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required")
+    .bail(),
+]
