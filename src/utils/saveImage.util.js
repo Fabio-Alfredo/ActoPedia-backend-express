@@ -1,4 +1,6 @@
-import cloudinary from "../configs/cloudinary.config";
+import cloudinary from "../configs/cloudinary.config.js";
+import {ServiceError} from "../errors/ServiceError.error.js";
+import errorCodes from "./errorCodes.util.js";
 
 const saveImage = async (image, file)=>{
 
@@ -11,8 +13,8 @@ const saveImage = async (image, file)=>{
             encoding: 'base64'
         },
         (error, result)=>{
-            if (error) reject(new ServiceError(error.message, 500));
-            resolve(result.secure_url);
+            if (error) reject(new ServiceError(error.message, errorCodes.IMAGES.NOT_FOUND));
+            else resolve(result.secure_url);
         }).end(image);
     })
 

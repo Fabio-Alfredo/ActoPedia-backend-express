@@ -7,7 +7,7 @@ export const createActor = async (actor)=>{
         const image =  await saveImage(actor.image, 'actors');
         if(!image)
             throw new ServiceError("Error saving image", errorCodes.IMAGES.NOT_FOUND);
-        
+
         actor.image = image;
         const newActor = await actorRepository.createActor(actor);
         return newActor;

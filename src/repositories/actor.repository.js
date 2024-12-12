@@ -1,4 +1,4 @@
-import Actor from "../models/actor.model";
+import Actor from "../models/actor.model.js";
 
 export const createActor = async (actor)=>{
     const newActor = new Actor(actor);
