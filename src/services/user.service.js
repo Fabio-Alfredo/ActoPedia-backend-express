@@ -7,7 +7,7 @@ export const createUser = async (user) => {
     const existingUser = await userRepository.getUserByEmail(user.email);
     if (existingUser)
       throw new ServiceError(
-        "User already exists",
+        "Email already in use",
         errorCodes.USER.ALREADY_EXISTS
       );
 
