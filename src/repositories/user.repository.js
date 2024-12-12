@@ -9,3 +9,7 @@ export const createUser = async (user)=>{
 export const getUserByEmail = async (email)=>{
     return User.findOne({email});
 }
+
+export const getUserByUsername = async (username)=>{
+    return User.findOne({username});
+}

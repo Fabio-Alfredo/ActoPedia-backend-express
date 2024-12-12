@@ -2,6 +2,7 @@ import { body } from "express-validator";
 
 export const registerValidator = [
   body("username")
+    .trim()
     .isString()
     .notEmpty()
     .withMessage("Username is required")
@@ -9,6 +10,7 @@ export const registerValidator = [
     .withMessage("Username must be between 3 and 20 characters")
     .bail(),
   body("email")
+  .trim()
     .isEmail()
     .withMessage("Email is not valid")
     .notEmpty()

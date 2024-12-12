@@ -8,6 +8,7 @@ export const register = async (req, res, next)=>{
         const newUser = await userService.createUser(user);
         res.status(201).json(newUser);
     }catch(e){
+       
         switch(e.code){
             case errorCodes.USER.ALREADY_EXISTS:
                 next(createHttpError(409, e.message));
