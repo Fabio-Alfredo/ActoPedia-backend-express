@@ -1,6 +1,7 @@
 import * as userRepository from "../repositories/user.repository.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
+import jwt from '../utils/jwt.util.js'
 
 export const createUser = async (user) => {
   try {
@@ -26,3 +27,28 @@ export const createUser = async (user) => {
     );
   }
 };
+
+
+export const authenticateUser = (identifier, password) => {
+  try{
+    const user = userRepository.getUserByEmailOrUsername(identifier);
+    if(!user)
+      throw new ServiceError(
+        "User not found",
+        errorCodes.USER.NOT_FOUND
+      );
+    if(!user.comparePassword(password))
+      throw new ServiceError(
+        "Invalid credentials",
+        errorCodes.USER.INVALID_PASSWORD
+      );
+    
+    const token = jwt.sign({id: user._id, role: user.role});
+    return token;
+  }catch(e){
+    throw new ServiceError(
+      e.message || "Internal server error while authenticating user",
+      e.code || errorCodes.USER.ERROR_LOGIN
+    );
+  }
+}

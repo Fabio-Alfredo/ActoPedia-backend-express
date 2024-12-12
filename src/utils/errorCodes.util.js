@@ -8,6 +8,8 @@ const errorCodes = {
         INVALID_ID: 1005,
         INVALID_ROLE: 1006,
         INVALID_STATUS: 1007,
+        ERROR_LOGIN: 1008,
+        INVALID_PASSWORD: 1009,
         
     }
 }
