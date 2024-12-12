@@ -32,7 +32,7 @@ export const createUser = async (user) => {
 export const authenticateUser = async (identifier, password) => {
   try{
     const user = await userRepository.getUserByEmailOrUsername(identifier);
-    
+
     if(!user || !(await user.comparePassword(password)))
       throw new ServiceError(
         "Invalid credentials",
@@ -40,7 +40,7 @@ export const authenticateUser = async (identifier, password) => {
       );
     
     const token = jwtUtil.generateToken({id: user._id, role: user.role});
-    await userRepository.addToken(user._id, token);
+    await userRepository.addToken(user._id, token.token);
     return token;
   }catch(e){
     throw new ServiceError(

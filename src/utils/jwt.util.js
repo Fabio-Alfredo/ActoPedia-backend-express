@@ -1,8 +1,8 @@
-import { sign, verify } from "jsonwebtoken";
-import { config } from "../configs/config";
+import jwt from "jsonwebtoken";
+import { config } from "../configs/config.js";
 
 const generateToken = (payload) => {
-  const token = sign(payload, config.jwtSecret, { expiresIn: "1d" });
+  const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "1d" });
   const expires_in = new Date().getTime() + 86400000;
 
   return {
@@ -13,7 +13,7 @@ const generateToken = (payload) => {
 
 const verifyToken=(token)=>{
     try{
-        const data = verify(token, config.jwtSecret);
+        const data = jwt.verify(token, config.jwtSecret);
         return data;
     }
     catch(e){

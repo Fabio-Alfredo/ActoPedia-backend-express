@@ -32,7 +32,8 @@ const userSchema = new Schema(
             default: config.defaultRole,
         },
         token:{
-            type:String,
+            type: String,
+            default: null,            
         }
     },
     {
