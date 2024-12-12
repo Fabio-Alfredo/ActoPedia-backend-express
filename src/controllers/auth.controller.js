@@ -21,3 +21,25 @@ export const register = async (req, res, next)=>{
         }
     }
 }
+
+export const login = async (req, res, next)=>{
+    try{
+        const {identifier, password}= req.body;
+        const token = await userService.authenticateUser(identifier, password);
+        res.status(200).json({token});
+    }catch(e){
+        switch(e.code){
+            case errorCodes.USER.NOT_FOUND:
+                next(createHttpError(404, e.message));
+                break;
+            case errorCodes.USER.INVALID_PASSWORD:
+                next(createHttpError(401, e.message));
+                break;
+            case errorCodes.USER.ERROR_LOGIN:
+                next(createHttpError(500, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

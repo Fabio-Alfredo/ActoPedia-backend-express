@@ -32,17 +32,12 @@ export const createUser = async (user) => {
 export const authenticateUser = async (identifier, password) => {
   try{
     const user = await userRepository.getUserByEmailOrUsername(identifier);
-    if(!user)
-      throw new ServiceError(
-        "User not found",
-        errorCodes.USER.NOT_FOUND
-      );
-    if(!user.comparePassword(password))
+    
+    if(!user || !(await user.comparePassword(password)))
       throw new ServiceError(
         "Invalid credentials",
-        errorCodes.USER.INVALID_PASSWORD
+        errorCodes.USER.NOT_FOUND
       );
-
     
     const token = jwtUtil.generateToken({id: user._id, role: user.role});
     await userRepository.addToken(user._id, token);
