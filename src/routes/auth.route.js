@@ -6,6 +6,6 @@ import { Router } from "express";
 const authRouter = Router();
 
 authRouter.post("/register",authValidator.registerValidator, runValidation, UserController.register);
-authRouter.post("/login", UserController.login);
+authRouter.post("/login",authValidator.loginValidator, runValidation,  UserController.login);
 
 export default authRouter;
