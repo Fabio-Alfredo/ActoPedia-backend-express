@@ -4,18 +4,21 @@ import errorCodes from "./errorCodes.util.js";
 
 const saveImage = async (image, file)=>{
 
+    const base64Image = `data:${image.mimetype};base64,${image.buffer.toString('base64')}`;
+
     const res = await new Promise ((resolve, reject)=>{
         cloudinary.uploader.upload_stream({
             folder: file,
-            stream: image,
+            stream: base64Image,
             resource_type: 'auto',
             public_id: `${file}/${Date.now()}`,
             encoding: 'base64'
         },
         (error, result)=>{
+            console.log("aca el error", error);
             if (error) reject(new ServiceError(error.message, errorCodes.IMAGES.NOT_FOUND));
             else resolve(result.secure_url);
-        }).end(image);
+        }).end(base64Image);
     })
 
     return res;
