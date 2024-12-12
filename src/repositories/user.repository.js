@@ -17,3 +17,7 @@ export const getUserByUsername = async (username)=>{
 export const getUserByEmailOrUsername = async (identifier)=>{
     return User.findOne({$or: [{email:identifier}, {username:identifier}]});
 }
+
+export const addToken = async (userId, token)=>{
+    return User.findByIdAndUpdate({_id: userId}, {token});
+}

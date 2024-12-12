@@ -30,6 +30,9 @@ const userSchema = new Schema(
             type:[String],
             enum: config.roles,
             default: config.defaultRole,
+        },
+        token:{
+            type:String,
         }
     },
     {
