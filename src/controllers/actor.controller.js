@@ -5,7 +5,6 @@ import errorCodes from '../utils/errorCodes.util.js';
 export const createActor = async (req, res, next)=>{
     try{
         const actor = req.body;
-        console.log(actor);
         const newActor = await actorService.createActor(actor);
         res.status(201).json(newActor);
     }catch(e){

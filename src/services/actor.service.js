@@ -1,6 +1,7 @@
 import * as actorRepository from '../repositories/actor.repository.js';
 import errorCodes from '../utils/errorCodes.util.js';
 import saveImage from '../utils/saveImage.util.js';
+import { ServiceError } from '../errors/ServiceError.error.js';
 
 export const createActor = async (actor)=>{
     try{
