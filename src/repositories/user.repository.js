@@ -13,3 +13,7 @@ export const getUserByEmail = async (email)=>{
 export const getUserByUsername = async (username)=>{
     return User.findOne({username});
 }
+
+export const getUserByEmailOrUsername = async (email, username)=>{
+    return User.findOne({$or: [{email}, {username}]});
+}
