@@ -44,9 +44,22 @@ export const FindActors = async () => {
 
 export const updateOneActor = async (actorId, actor) => {
   try {
+    if (actor.image) {
+      const image = await saveImage(actor.image, "actors");
+      if (!image)
+        throw new ServiceError(
+          "Error saving image",
+          errorCodes.IMAGES.NOT_FOUND
+        );
+
+      actor.image = image;
+    }
     const existingActor = await actorRepository.findActorById(actorId);
     if (!existingActor)
-      throw new ServiceError("Actor not existing", errorCodes.ACTOR.USER_NOT_EXISTS);
+      throw new ServiceError(
+        "Actor not existing",
+        errorCodes.ACTOR.USER_NOT_EXISTS
+      );
 
     const updatedActor = await actorRepository.updateActor(actorId, actor);
     return updatedActor;

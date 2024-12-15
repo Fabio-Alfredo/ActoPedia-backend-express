@@ -36,3 +36,26 @@ export const getActors = async (req, res, next)=>{
         }
     }
 }
+
+export const updateActor = async (req, res, next)=>{
+    try{
+        const actorId = req.params.actorId;
+        const actor = req.body;
+        if(req.files){
+            actor.image = req.files[0];
+        }
+        const updatedActor = await actorService.updateOneActor(actorId, actor);
+        res.status(200).json(updatedActor);
+    }catch(e){
+        switch(e.code){
+            case errorCodes.ACTOR.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            case errorCodes.ACTOR.USER_NOT_EXISTS:
+                next(createHttpError(404, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}
