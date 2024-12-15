@@ -15,7 +15,6 @@ const saveImage = async (image, file)=>{
             encoding: 'base64'
         },
         (error, result)=>{
-            console.log("aca el error", error);
             if (error) reject(new ServiceError(error.message, errorCodes.IMAGES.NOT_FOUND));
             else resolve(result.secure_url);
         }).end(base64Image);

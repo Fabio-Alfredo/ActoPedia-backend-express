@@ -16,3 +16,7 @@ export const getActors = async ()=>{
 export const addMovie = async (actorId, movie)=>{
     return Actor.findByIdAndUpdate({_id: actorId}, {$addToSet: {movies: movie}});
 }
+
+export const findActorByNameAndAge = async (name, age)=>{
+    return Actor.findOne({name, age})
+}
