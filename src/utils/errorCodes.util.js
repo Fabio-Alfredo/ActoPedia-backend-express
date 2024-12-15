@@ -19,7 +19,12 @@ const errorCodes = {
     },
     IMAGES:{
         NOT_FOUND: 3000,
-    }
+    },
+    MOVIE:{
+        NOT_FOUND: 4000,
+        ALREADY_EXISTS: 4001,
+        ACTOR_NOT_EXISTS: 4002,
+    },
 }
 
 export default errorCodes;

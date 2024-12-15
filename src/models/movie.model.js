@@ -47,3 +47,7 @@ const movieSchema = new Schema(
         timestamps: true,
     }
 )
+
+const Movie = model('Movie', movieSchema);
+
+export default Movie;

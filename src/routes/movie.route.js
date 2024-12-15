@@ -1,0 +1,8 @@
+import { Router } from 'express';
+import *as movieController from '../controllers/movie.controller.js';
+
+const movieRouter = Router();
+
+movieRouter.post('/create', movieController.createMovie);
+
+export default movieRouter;
