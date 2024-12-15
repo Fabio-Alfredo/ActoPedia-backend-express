@@ -10,6 +10,9 @@ const validatorEnv = (env, name) => {
 export const config = {
   port: validatorEnv(process.env.PORT, "PORT"),
   mongo: validatorEnv(process.env.MONGODB_URI, "MONGODB_URI"),
+  role_one: validatorEnv(process.env.ROLE_ONE, "ROLE_ONE"),
+  role_two: validatorEnv(process.env.ROLE_TWO, "ROLE_TWO"),
+  role_three: validatorEnv(process.env.ROLE_THREE, "ROLE_THREE"),
   roles: validatorEnv(process.env.ROLES, "ROLES")
     .split(",")
     .map((role) => role.trim()),
