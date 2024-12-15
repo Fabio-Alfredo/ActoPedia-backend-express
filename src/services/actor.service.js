@@ -29,3 +29,15 @@ export const createActor = async (actor) => {
     );
   }
 };
+
+export const FindActors = async () => {
+    try{
+        const actors = await actorRepository.getActors();
+        return actors;
+    }catch(e){
+        throw new ServiceError(
+            e.message || "Internal server error while getting actors",
+            e.code || errorCodes.ACTOR.NOT_FOUND
+        );
+    }
+}
