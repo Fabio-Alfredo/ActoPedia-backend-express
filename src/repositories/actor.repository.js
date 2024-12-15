@@ -1,5 +1,9 @@
 import Actor from "../models/actor.model.js";
 
+export const findActorById = async (actorId)=>{
+    return Actor.findById(actorId);
+}
+
 export const createActor = async (actor)=>{
     const newActor = new Actor(actor);
     return newActor.save();

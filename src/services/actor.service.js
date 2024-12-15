@@ -31,13 +31,29 @@ export const createActor = async (actor) => {
 };
 
 export const FindActors = async () => {
-    try{
-        const actors = await actorRepository.getActors();
-        return actors;
-    }catch(e){
-        throw new ServiceError(
-            e.message || "Internal server error while getting actors",
-            e.code || errorCodes.ACTOR.NOT_FOUND
-        );
-    }
-}
+  try {
+    const actors = await actorRepository.getActors();
+    return actors;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while getting actors",
+      e.code || errorCodes.ACTOR.NOT_FOUND
+    );
+  }
+};
+
+export const updateOneActor = async (actorId, actor) => {
+  try {
+    const existingActor = await actorRepository.findActorById(actorId);
+    if (!existingActor)
+      throw new ServiceError("Actor not existing", errorCodes.ACTOR.USER_NOT_EXISTS);
+
+    const updatedActor = await actorRepository.updateActor(actorId, actor);
+    return updatedActor;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while updating actor",
+      e.code || errorCodes.ACTOR.NOT_FOUND
+    );
+  }
+};
