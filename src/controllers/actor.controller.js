@@ -21,3 +21,18 @@ export const createActor = async (req, res, next)=>{
         }
     }
 }
+
+export const getActors = async (req, res, next)=>{
+    try{
+        const acators = await actorService.FindActors();
+        res.status(200).json(acators);
+    }catch(e){
+        switch(e.code){
+            case errorCodes.ACTOR.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

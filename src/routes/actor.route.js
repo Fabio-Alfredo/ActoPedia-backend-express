@@ -5,5 +5,6 @@ import runValidation from "../middlewares/validator.middleware.js";
 
 const actorRouter = Router();
 actorRouter.post("/create", actorController.createActor);
+actorRouter.get("/", actorController.getActors);
 
 export default actorRouter;
