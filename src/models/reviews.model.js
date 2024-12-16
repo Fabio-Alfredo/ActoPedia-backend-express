@@ -16,11 +16,13 @@ const reviewSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
+            inmutable: true,
         },
         movie:{
             type: Schema.Types.ObjectId,
             ref: 'Movie',
             required: true,
+            inmutable: true,
         },
 
     },
