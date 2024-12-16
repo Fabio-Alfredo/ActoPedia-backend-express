@@ -35,6 +35,7 @@ export const addActorToMovie = async (movieId, actorId, personaje) => {
         const actor = await actorService.existingActor(actorId);
 
         const updateMovie = await movieRerpository.addActor(movie._id, actor._id, personaje);
+        await actorService.addMovieInActor(actor._id, movie._id, personaje);
         return updateMovie;
 
     }catch(e){

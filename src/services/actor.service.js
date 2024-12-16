@@ -87,3 +87,15 @@ export const existingActor = async (actorId) => {
     );
   }
 };
+
+export const addMovieInActor = async (actorId, movieId, personaje) => {
+  try{
+    const updateActor = await actorRepository.addMovie(actorId, movieId, personaje);
+    return updateActor;
+  }catch(e){
+    throw new ServiceError(
+      e.message || "Internal server error while adding movie to actor",
+      e.code || errorCodes.ACTOR.NOT_FOUND
+    );
+  }
+}
