@@ -25,6 +25,10 @@ const errorCodes = {
         ALREADY_EXISTS: 4001,
         ACTOR_NOT_EXISTS: 4002,
     },
+    REVIEW:{
+        NOT_FOUND: 5000,
+        REVIEW_NOT_EXISTS: 5002,
+    }
 }
 
 export default errorCodes;
