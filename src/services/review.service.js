@@ -18,3 +18,21 @@ export const createReview = async (review) => {
     );
   }
 };
+
+export const updateReview = async (reviewId, review) => {
+    try{
+        const existingReview = await reviewRepository.findReviewById(reviewId);
+        if(!existingReview)
+            throw new ServiceError('Review not existing', errorCodes.REVIEW.REVIEW_NOT_EXISTS);
+        if(existingReview.user != review.user)
+            throw new ServiceError('User not allowed to update review', errorCodes.REVIEW.NOT_ALLOWED);
+
+        const updatedReview = await reviewRepository.updateReview(reviewId, review);
+        return updatedReview;
+    }catch(e){
+        throw new ServiceError(
+            e.message || 'Internal server error while updating review',
+            e.code || errorCodes.REVIEW.NOT_FOUND
+        );
+    }
+}

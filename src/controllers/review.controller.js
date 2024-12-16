@@ -17,3 +17,26 @@ export const createReview = async (req, res, next)=>{
         }
     }
 }
+
+export const updateReview = async (req, res, next)=>{
+    try{
+        const reviewId = req.params.reviewId;
+        const review = req.body;
+        const updatedReview = await reviewService.updateReview(reviewId, review);
+        res.status(200).json(updatedReview);
+    }catch(e){
+        switch(e){
+            case errorCodes.REVIEW.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            case errorCodes.REVIEW.REVIEW_NOT_EXISTS:
+                next(createHttpError(404, e.message));
+                break;
+            case errorCodes.REVIEW.NOT_ALLOWED:
+                next(createHttpError(403, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

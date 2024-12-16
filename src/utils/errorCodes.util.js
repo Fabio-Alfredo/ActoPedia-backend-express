@@ -28,6 +28,8 @@ const errorCodes = {
     REVIEW:{
         NOT_FOUND: 5000,
         REVIEW_NOT_EXISTS: 5002,
+        NOT_ALLOWED: 5003,
+        REVIEW_NOT_EXISTS: 5004,
     }
 }
 
