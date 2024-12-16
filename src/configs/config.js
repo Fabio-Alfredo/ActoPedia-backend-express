@@ -1,4 +1,18 @@
 import "dotenv/config.js";
+const {
+  PORT,
+  MONGODB_URI,
+  ROLE_ONE,
+  ROLE_TWO,
+  ROLE_THREE,
+  ROLES,
+  DEFAULT_ROLE,
+  SALT_ROUNDS,
+  JWT_SECRET,
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+} = process.env;
 
 const validatorEnv = (env, name) => {
   if (!env) {
@@ -8,27 +22,21 @@ const validatorEnv = (env, name) => {
 };
 
 export const config = {
-  port: validatorEnv(process.env.PORT, "PORT"),
-  mongo: validatorEnv(process.env.MONGODB_URI, "MONGODB_URI"),
-  role_one: validatorEnv(process.env.ROLE_ONE, "ROLE_ONE"),
-  role_two: validatorEnv(process.env.ROLE_TWO, "ROLE_TWO"),
-  role_three: validatorEnv(process.env.ROLE_THREE, "ROLE_THREE"),
-  roles: validatorEnv(process.env.ROLES, "ROLES")
+  port: validatorEnv(PORT, "PORT"),
+  mongo: validatorEnv(MONGODB_URI, "MONGODB_URI"),
+  role_one: validatorEnv(ROLE_ONE, "ROLE_ONE"),
+  role_two: validatorEnv(ROLE_TWO, "ROLE_TWO"),
+  role_three: validatorEnv(ROLE_THREE, "ROLE_THREE"),
+  roles: validatorEnv(ROLES, "ROLES")
     .split(",")
     .map((role) => role.trim()),
-  defaultRole: validatorEnv(process.env.DEFAULT_ROLE, "DEFAULT_ROLE").trim(),
-  salt: validatorEnv(process.env.SALT_ROUNDS, "SALT_ROUNDS"),
-  jwtSecret: validatorEnv(process.env.JWT_SECRET, "JWT_SECRET"),
-  cloudinaryName: validatorEnv(
-    process.env.CLOUDINARY_CLOUD_NAME,
-    "CLOUDINARY_NAME"
-  ),
-  cloudinaryApiKey: validatorEnv(
-    process.env.CLOUDINARY_API_KEY,
-    "CLOUDINARY_API_KEY"
-  ),
+  defaultRole: validatorEnv(DEFAULT_ROLE, "DEFAULT_ROLE").trim(),
+  salt: validatorEnv(SALT_ROUNDS, "SALT_ROUNDS"),
+  jwtSecret: validatorEnv(JWT_SECRET, "JWT_SECRET"),
+  cloudinaryName: validatorEnv(CLOUDINARY_CLOUD_NAME, "CLOUDINARY_NAME"),
+  cloudinaryApiKey: validatorEnv(CLOUDINARY_API_KEY, "CLOUDINARY_API_KEY"),
   cloudinaryApiSecret: validatorEnv(
-    process.env.CLOUDINARY_API_SECRET,
+    CLOUDINARY_API_SECRET,
     "CLOUDINARY_API_SECRET"
   ),
 };
