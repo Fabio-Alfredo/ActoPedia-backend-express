@@ -29,9 +29,10 @@ export const createMovie = async (req, res, next)=>{
 export const addActorToMovie = async (req, res, next)=>{
     try{
         const movieId = req.params.movieId;
-        const {actorId, personaje} = req.body;
-        const updatedMovie = await movieService.addActorToMovie(movieId, actorId, personaje);
-        res.status(200).json(updatedMovie);
+        const {personajes} = req.body;
+
+        const updatedMovie = await movieService.addActorToMovie(movieId, personajes);
+         res.status(200).json(updatedMovie);
     }catch(e){
         switch(e.code){
             case errorCodes.MOVIE.NOT_FOUND:
