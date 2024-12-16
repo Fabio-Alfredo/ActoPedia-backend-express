@@ -44,3 +44,18 @@ export const addActorToMovie = async (req, res, next)=>{
         }
     }
 };
+
+export const getMovies = async (req, res, next)=>{
+    try{
+        const movies = await movieService.getMovies();
+        res.status(200).json(movies);
+    }catch(e){
+        switch(e.code){
+            case errorCodes.MOVIE.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

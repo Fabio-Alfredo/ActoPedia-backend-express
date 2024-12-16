@@ -45,3 +45,15 @@ export const addActorToMovie = async (movieId, actorId, personaje) => {
         );
     }
 }
+
+export const getMovies = async ()=>{
+    try{
+        const movies = await movieRerpository.getMovies();
+        return movies;
+    }catch(e){
+        throw new ServiceError(
+            e.message || 'Internal server error while getting movies',
+            e.code || errorCodes.MOVIE.NOT_FOUND
+        );
+    }
+}

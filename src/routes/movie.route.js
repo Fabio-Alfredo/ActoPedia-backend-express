@@ -5,5 +5,6 @@ const movieRouter = Router();
 
 movieRouter.post('/create', movieController.createMovie);
 movieRouter.put('/addActor', movieController.addActorToMovie);
+movieRouter.get('/getMovies', movieController.getMovies);
 
 export default movieRouter;
