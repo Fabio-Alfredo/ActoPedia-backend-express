@@ -15,7 +15,7 @@ const errorCodes = {
     ACTOR:{
         NOT_FOUND: 2000,
         ALREADY_EXISTS: 2001,
-        USER_NOT_EXISTS: 2002,
+        ACTOR_NOT_EXISTS: 2002,
     },
     IMAGES:{
         NOT_FOUND: 3000,

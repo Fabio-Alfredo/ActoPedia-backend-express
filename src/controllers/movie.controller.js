@@ -24,3 +24,23 @@ export const createMovie = async (req, res, next)=>{
         }
     }
 }
+
+
+export const addActorToMovie = async (req, res, next)=>{
+    try{
+        const {movieId, actorId, personaje} = req.body;
+        const updatedMovie = await movieService.addActorToMovie(movieId, actorId, personaje);
+        res.status(200).json(updatedMovie);
+    }catch(e){
+        switch(e.code){
+            case errorCodes.MOVIE.NOT_FOUND:
+                next(createHttpError(404, e.message));
+                break;
+            case errorCodes.ACTOR.NOT_FOUND:
+                next(createHttpError(404, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+};

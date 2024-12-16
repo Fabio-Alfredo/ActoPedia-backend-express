@@ -20,10 +20,10 @@ const actorSchema = new Schema(
         },
         movies:[
             {
-                movie:{ type: Schema.Types.ObjectId, ref: 'Movie' },
-                personaje: String,
+                type: Schema.Types.ObjectId,
+                ref: 'Movie',
             }
-        ],
+        ]
     },
     {
         timestamps: true,

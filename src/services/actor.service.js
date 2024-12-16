@@ -70,3 +70,20 @@ export const updateOneActor = async (actorId, actor) => {
     );
   }
 };
+
+export const existingActor = async (actorId) => {
+  try {
+    const actor = await actorRepository.findActorById(actorId);
+    if (!actor)
+      throw new ServiceError(
+        "Actor not existing",
+        errorCodes.ACTOR.ACTOR_NOT_EXISTS
+      );
+    return actor;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while getting actor",
+      e.code || errorCodes.ACTOR.NOT_FOUND
+    );
+  }
+};
