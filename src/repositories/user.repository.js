@@ -21,3 +21,7 @@ export const getUserByEmailOrUsername = async (identifier)=>{
 export const addToken = async (userId, token)=>{
     return await User.findByIdAndUpdate({_id: userId}, {token});
 }
+
+export const getUserById = async (id)=>{
+    return await User.findById(id);
+}

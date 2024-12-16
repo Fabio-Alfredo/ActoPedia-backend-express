@@ -2,6 +2,7 @@ import * as userRepository from "../repositories/user.repository.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 import jwtUtil from "../utils/jwt.util.js";
+import e from "express";
 
 export const createUser = async (user) => {
   try {
@@ -46,6 +47,23 @@ export const authenticateUser = async (identifier, password) => {
     throw new ServiceError(
       e.message || "Internal server error while authenticating user",
       e.code || errorCodes.USER.ERROR_LOGIN
+    );
+  }
+}
+
+export const getUserById = async (id)=>{
+  try{
+    const user = await userRepository.getUserById(id);
+    if(!user)
+      throw new ServiceError(
+        "User not exists",
+        errorCodes.USER.USER_NOT_EXISTS
+      );
+    return user;
+  }catch(e){
+    throw new ServiceError(
+      e.message || "Internal server error while fetching user",
+      e.code || errorCodes.USER.NOT_FOUND
     );
   }
 }

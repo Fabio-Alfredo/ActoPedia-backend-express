@@ -9,7 +9,8 @@ const errorCodes = {
         INVALID_ROLE: 1006,
         INVALID_STATUS: 1007,
         ERROR_LOGIN: 1008,
-        INVALID_PASSWORD: 1009,
+        USER_NOT_EXISTS: 1009,
+        INVALID_PASSWORD: 1010,
         
     },
     ACTOR:{

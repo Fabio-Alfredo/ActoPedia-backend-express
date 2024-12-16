@@ -12,6 +12,7 @@ const {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  PREFIX_TOKEN
 } = process.env;
 
 const validatorEnv = (env, name) => {
@@ -39,4 +40,5 @@ export const config = {
     CLOUDINARY_API_SECRET,
     "CLOUDINARY_API_SECRET"
   ),
+  prefixToken: validatorEnv(PREFIX_TOKEN, "PREFIX_TOKEN"),
 };
