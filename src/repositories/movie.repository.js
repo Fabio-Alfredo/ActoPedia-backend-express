@@ -1,20 +1,21 @@
 import { populate } from "dotenv";
 import Movie from "../models/movie.model.js";
 
-export const createMovie = async (movie) => {
+export const createMovie = async (movie, opts) => {
   const newMovie = new Movie(movie);
-  return await newMovie.save();
+  return await newMovie.save(opts);
 };
 
 export const findMovieByTitle = async (title) => {
   return await Movie.findOne({ title });
 };
 
-export const addActors = async (movieId, actors) => {
+export const addActors = async (movieId, actors, opts) => {
   return await Movie.findByIdAndUpdate(
     { _id: movieId },
     { $addToSet: { actors } },
-    { new: true }
+    { new: true },
+    opts
   );
 };
 
@@ -35,15 +36,16 @@ export const getMovies = async () => {
     });
 };
 
-export const addReview = async (movieId, reviewId) => {
+export const addReview = async (movieId, reviewId, opts) => {
   return await Movie.findByIdAndUpdate(
     { _id: movieId },
     { $addToSet: { reviews: reviewId } },
-    { new: true }
+    { new: true },
+    opts
   );
 };
 
-export const updateMovie = async (movieId, movie, id) => {
+export const updateMovie = async (movieId, movie, id, opts) => {
   return await Movie.findByIdAndUpdate(
     { _id: movieId },
     {
@@ -55,6 +57,7 @@ export const updateMovie = async (movieId, movie, id) => {
         },
       },
     },
-    { new: true }
+    { new: true },
+    opts
   );
 };

@@ -1,10 +1,14 @@
+import mongoose from "mongoose";
 import * as actorRepository from "../repositories/actor.repository.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import saveImage from "../utils/saveImage.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 
 export const createActor = async (actor, user) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
+    const opts = { session };
     const image = await saveImage(actor.image, "actors");
     if (!image)
       throw new ServiceError("Error saving image", errorCodes.IMAGES.NOT_FOUND);
@@ -20,15 +24,18 @@ export const createActor = async (actor, user) => {
         errorCodes.ACTOR.ALREADY_EXISTS
       );
 
-      actor.createFor = {user: user._id, date: new Date()};
+    actor.createFor = { user: user._id, date: new Date() };
 
-    const newActor = await actorRepository.createActor(actor);
+    const newActor = await actorRepository.createActor(actor, opts);
     return newActor;
   } catch (e) {
+    await session.abortTransaction();
     throw new ServiceError(
       e.message || "Internal server error while creating actor",
       e.code || errorCodes.ACTOR.NOT_FOUND
     );
+  } finally {
+    await session.endSession();
   }
 };
 
@@ -45,7 +52,10 @@ export const FindActors = async () => {
 };
 
 export const updateOneActor = async (actorId, actor, user) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
+    const opts = { session };
     if (actor.image) {
       const image = await saveImage(actor.image, "actors");
       if (!image)
@@ -61,14 +71,22 @@ export const updateOneActor = async (actorId, actor, user) => {
       throw new ServiceError(
         "Actor not existing",
         errorCodes.ACTOR.USER_NOT_EXISTS
-      );  
-    const updatedActor = await actorRepository.updateActor(actorId, actor, user._id);
+      );
+    const updatedActor = await actorRepository.updateActor(
+      actorId,
+      actor,
+      user._id,
+      opts
+    );
     return updatedActor;
   } catch (e) {
+    await session.abortTransaction();
     throw new ServiceError(
       e.message || "Internal server error while updating actor",
       e.code || errorCodes.ACTOR.NOT_FOUND
     );
+  } finally {
+    await session.endSession();
   }
 };
 
@@ -89,14 +107,19 @@ export const existingActor = async (actorId) => {
   }
 };
 
-export const addMovieInActor = async (actorId, movieId, personaje) => {
-  try{
-    const updateActor = await actorRepository.addMovie(actorId, movieId, personaje);
+export const addMovieInActor = async (actorId, movieId, personaje, opts) => {
+  try {
+    const updateActor = await actorRepository.addMovie(
+      actorId,
+      movieId,
+      personaje,
+      opts
+    );
     return updateActor;
-  }catch(e){
+  } catch (e) {
     throw new ServiceError(
       e.message || "Internal server error while adding movie to actor",
       e.code || errorCodes.ACTOR.NOT_FOUND
     );
   }
-}
+};
