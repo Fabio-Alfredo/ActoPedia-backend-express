@@ -2,6 +2,7 @@ import createHttpError from "http-errors";
 import jwtUtil from "../utils/jwt.util.js";
 import { getUserById } from "../services/user.service.js";
 import { config } from "../configs/config.js";
+import { USER_STATES } from "../utils/constans/statesuser.util.js";
 
 export const authMiddleware = async (req, res, next) => {
   try {
@@ -19,6 +20,7 @@ export const authMiddleware = async (req, res, next) => {
     const user = await getUserById(payload.id);
     if (!user) throw createHttpError(401, "User not exists");
     if (user.token !== token) throw createHttpError(401, "Invalid token");
+    if(user.estate === USER_STATES.BLOCKED) throw createHttpError(401, "User is blocked");
 
     req.user = user;
     req.token = token;
@@ -46,3 +48,4 @@ export const rolesMiddleware = (requiredRoles) => {
     }
   };
 };
+

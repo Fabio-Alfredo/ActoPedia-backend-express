@@ -1,6 +1,10 @@
 import { Schema, model } from "mongoose";
 import { config } from "../configs/config.js";
 import bcrypct from "bcryptjs";
+import {USER_STATES} from "../utils/constans/statesuser.util.js";
+
+const STATE_LIST = Object.values(USER_STATES);
+
 
 const userSchema = new Schema(
   {
@@ -42,6 +46,11 @@ const userSchema = new Schema(
         date: Date,
       },
     ],
+    estate:{
+        type: String,
+        enum: STATE_LIST,
+        default: USER_STATES.ACTIVE,
+    }
   },
   {
     timestamps: true,
