@@ -24,6 +24,16 @@ const actorSchema = new Schema(
         personaje:String ,
       },
     ],
+    createFor:{
+      user:{type:Schema.Types.ObjectId, ref:"User"},
+      date:Date,
+    },
+    updateFor:[
+      {
+        user:{type:Schema.Types.ObjectId, ref:"User"},
+        date:Date,
+      }
+    ]
   },
   {
     timestamps: true,

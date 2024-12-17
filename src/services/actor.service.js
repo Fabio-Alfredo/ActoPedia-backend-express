@@ -3,7 +3,7 @@ import errorCodes from "../utils/errorCodes.util.js";
 import saveImage from "../utils/saveImage.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 
-export const createActor = async (actor) => {
+export const createActor = async (actor, user) => {
   try {
     const image = await saveImage(actor.image, "actors");
     if (!image)
@@ -19,6 +19,8 @@ export const createActor = async (actor) => {
         "Actor already exists",
         errorCodes.ACTOR.ALREADY_EXISTS
       );
+
+      actor.createFor = {user: user._id, date: new Date()};
 
     const newActor = await actorRepository.createActor(actor);
     return newActor;

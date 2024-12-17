@@ -6,7 +6,7 @@ export const createActor = async (req, res, next)=>{
     try{
         const actor = req.body;
         actor.image = req.files[0];
-        const newActor = await actorService.createActor(actor);
+        const newActor = await actorService.createActor(actor, req.user);
         res.status(201).json(newActor);
     }catch(e){
         switch(e.code){

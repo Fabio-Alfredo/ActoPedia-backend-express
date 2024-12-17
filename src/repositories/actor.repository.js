@@ -4,7 +4,7 @@ export const findActorById = async (actorId) => {
   return await Actor.findById(actorId);
 };
 
-export const createActor = async (actor) => {
+export const createActor = async (actor, userId) => {
   const newActor = new Actor(actor);
   return await newActor.save();
 };

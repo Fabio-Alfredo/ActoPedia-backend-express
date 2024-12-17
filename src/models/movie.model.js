@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { MOVIE_GENERS } from "../utils/constants.js";
+import { MOVIE_GENERS } from "../utils/moviegender.util.js";
 
 const GENRES_LIST = Object.values(MOVIE_GENERS);
 
