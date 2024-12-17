@@ -32,7 +32,8 @@ const errorCodes = {
         REVIEW_NOT_EXISTS: 5002,
         NOT_ALLOWED: 5003,
         REVIEW_NOT_EXISTS: 5004,
-    }
+    },
+    
 }
 
 export default errorCodes;

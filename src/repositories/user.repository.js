@@ -30,3 +30,37 @@ export const addToken = async (userId, token, opts) => {
 export const getUserById = async (id) => {
   return await User.findById(id);
 };
+
+export const addRole = async (userId, role, admin, opts) => {
+  return await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      $addToSet: {
+        role:role, 
+        updateRoleBy: {
+          user: admin,
+          date: Date.now(),
+        },
+      },
+    },
+    { new: true, opts }
+  );
+};
+
+export const removeRole = async (userId, role, admin, opts) => {
+  return await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      $pull: {
+        role: role,
+      },
+      $push: {
+        updateRoleBy: {
+          user: admin,
+          date: Date.now(),
+        },
+      },
+    },
+    { new: true, opts }
+  );
+}

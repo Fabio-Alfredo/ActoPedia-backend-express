@@ -49,7 +49,7 @@ export const authenticateUser = async (identifier, password) => {
 
     const token = jwtUtil.generateToken({ id: user._id, role: user.role });
     await userRepository.addToken(user._id, token.token, opts);
-    
+
     await session.commitTransaction();
     return token;
   } catch (e) {
@@ -77,5 +77,35 @@ export const getUserById = async (id) => {
       e.message || "Internal server error while fetching user",
       e.code || errorCodes.USER.NOT_FOUND
     );
+  }
+};
+
+export const updateRoles = async (userId, role, admin) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    let user;
+    const opts = { session };
+    const existingUser = await userRepository.getUserById(userId);
+    if (!existingUser)
+      throw new ServiceError(
+        "User not exists",
+        errorCodes.USER.USER_NOT_EXISTS
+      );
+
+    if (existingUser.role.includes(role))
+      user = await userRepository.removeRole(userId, role, admin, opts);
+    else user = await userRepository.addRole(userId, role, admin, opts);
+
+    await session.commitTransaction();
+    return user;
+  } catch (e) {
+    await session.abortTransaction();
+    throw new ServiceError(
+      e.message || "Internal server error while updating user roles",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
+  } finally {
+    await session.endSession();
   }
 };
