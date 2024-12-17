@@ -1,4 +1,7 @@
 import { Schema, model } from "mongoose";
+import { MOVIE_GENERS } from "../utils/constants.js";
+
+const GENRES_LIST = Object.values(MOVIE_GENERS);
 
 const movieSchema = new Schema(
     {
@@ -37,7 +40,8 @@ const movieSchema = new Schema(
         },
         genero:{
             type: String,
-            enum:[],
+            enum: GENRES_LIST,
+            default: MOVIE_GENERS.OTRO
             required: true,
         },
 

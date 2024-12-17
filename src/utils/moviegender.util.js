@@ -17,5 +17,6 @@ export const MOVIE_GENERS ={
     TV_MOVIE: "tv movie",
     THRILLER: "thriller",
     WAR: "war",
-    WESTERN: "western"
+    WESTERN: "western",
+    OTRO: "otro",
 }
