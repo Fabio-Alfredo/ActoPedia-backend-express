@@ -8,7 +8,7 @@ const reviewRouter = Router();
 
 reviewRouter.post(
   "/create",
-  // authMiddleware.authMiddleware,
+  authMiddleware.authMiddleware,
   reviewValidator.createReview,
   runValidation,
   reviewController.createReview

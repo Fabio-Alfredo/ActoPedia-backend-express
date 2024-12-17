@@ -20,7 +20,11 @@ export const getUserByEmailOrUsername = async (identifier) => {
 };
 
 export const addToken = async (userId, token, opts) => {
-  return await User.findByIdAndUpdate({ _id: userId }, { token }, opts);
+  return await User.findByIdAndUpdate(
+    { _id: userId },
+    { token },
+    { new: true, opts }
+  );
 };
 
 export const getUserById = async (id) => {

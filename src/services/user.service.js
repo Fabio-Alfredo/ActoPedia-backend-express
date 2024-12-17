@@ -44,12 +44,12 @@ export const authenticateUser = async (identifier, password) => {
   try {
     const opts = { session };
     const user = await userRepository.getUserByEmailOrUsername(identifier);
-
     if (!user || !(await user.comparePassword(password)))
       throw new ServiceError("Invalid credentials", errorCodes.USER.NOT_FOUND);
 
     const token = jwtUtil.generateToken({ id: user._id, role: user.role });
     await userRepository.addToken(user._id, token.token, opts);
+    
     await session.commitTransaction();
     return token;
   } catch (e) {
