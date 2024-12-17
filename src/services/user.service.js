@@ -3,6 +3,7 @@ import * as userRepository from "../repositories/user.repository.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 import jwtUtil from "../utils/jwt.util.js";
+import { USER_STATES } from "../utils/constans/statesuser.util.js";
 
 export const createUser = async (user) => {
   const session = await mongoose.startSession();
@@ -44,8 +45,12 @@ export const authenticateUser = async (identifier, password) => {
   try {
     const opts = { session };
     const user = await userRepository.getUserByEmailOrUsername(identifier);
+
     if (!user || !(await user.comparePassword(password)))
       throw new ServiceError("Invalid credentials", errorCodes.USER.NOT_FOUND);
+    
+    if (user.state === USER_STATES.BLOCKED)
+      throw new ServiceError("User is blocked", errorCodes.USER.USER_BLOCKED);
 
     const token = jwtUtil.generateToken({ id: user._id, role: user.role });
     await userRepository.addToken(user._id, token.token, opts);

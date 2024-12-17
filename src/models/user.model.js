@@ -46,7 +46,7 @@ const userSchema = new Schema(
         date: Date,
       },
     ],
-    estate:{
+    state:{
         type: String,
         enum: STATE_LIST,
         default: USER_STATES.ACTIVE,

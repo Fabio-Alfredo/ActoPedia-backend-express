@@ -18,9 +18,9 @@ export const authMiddleware = async (req, res, next) => {
     if (!payload) throw createHttpError(401, "Invalid token");
 
     const user = await getUserById(payload.id);
+    if(user.estate === USER_STATES.BLOCKED) throw createHttpError(401, "User is blocked");
     if (!user) throw createHttpError(401, "User not exists");
     if (user.token !== token) throw createHttpError(401, "Invalid token");
-    if(user.estate === USER_STATES.BLOCKED) throw createHttpError(401, "User is blocked");
 
     req.user = user;
     req.token = token;

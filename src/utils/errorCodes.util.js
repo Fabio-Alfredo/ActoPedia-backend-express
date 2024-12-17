@@ -11,6 +11,7 @@ const errorCodes = {
         ERROR_LOGIN: 1008,
         USER_NOT_EXISTS: 1009,
         INVALID_PASSWORD: 1010,
+        USER_BLOCKED: 1011,
         
     },
     ACTOR:{
@@ -33,7 +34,7 @@ const errorCodes = {
         NOT_ALLOWED: 5003,
         REVIEW_NOT_EXISTS: 5004,
     },
-    
+
 }
 
 export default errorCodes;

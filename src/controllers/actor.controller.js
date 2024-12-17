@@ -54,6 +54,9 @@ export const updateActor = async (req, res, next)=>{
             case errorCodes.ACTOR.USER_NOT_EXISTS:
                 next(createHttpError(404, e.message));
                 break;
+            case errorCodes.USER.USER_BLOCKED:
+                next(createHttpError(401, e.message));
+                break;
             default:
                 next(e);
         }
