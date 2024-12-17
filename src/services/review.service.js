@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import * as reviewRepository from "../repositories/review.repository.js";
 import * as movieService from "../services/movie.service.js";
 import errorCodes from "../utils/errorCodes.util.js";
@@ -8,22 +9,26 @@ export const createReview = async (review) => {
   session.startTransaction();
   try {
     const opts = { session };
+    console.log(opts)
     const movie = await movieService.existingMovie(review.movie);
     if (!movie)
       throw new ServiceError("Movie not found", errorCodes.MOVIE.NOT_FOUND);
 
     const newReview = await reviewRepository.createRevew(review, opts);
 
-    await movieService.addReviewToMovie(movie._id, newReview._id, opts);
+    await movieService.addReviewToMovie(null, newReview._id, opts);
+    await session.commitTransaction();
     return newReview;
   } catch (e) {
     await session.abortTransaction();
+
     throw new ServiceError(
       e.message || "Internal server error while creating review",
       e.code || errorCodes.REVIEW.NOT_FOUND
     );
   } finally {
     await session.endSession();
+    
   }
 };
 
@@ -49,6 +54,7 @@ export const updateReview = async (reviewId, review) => {
       review,
       opts
     );
+    await session.commitTransaction();
     return updatedReview;
   } catch (e) {
     await session.abortTransaction();

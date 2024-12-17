@@ -21,8 +21,7 @@ export const updateActor = async (actorId, actor, userId, opts) => {
         },
       },
     },
-    { new: true },
-    opts
+    { new: true, opts }
   );
 };
 
@@ -34,8 +33,7 @@ export const addMovie = async (actorId, movieId, personaje, opts) => {
   return await Actor.findByIdAndUpdate(
     { _id: actorId },
     { $addToSet: { movies: { movie: movieId, personaje } } },
-    { new: true },
-    opts
+    { new: true, opts }
   );
 };
 

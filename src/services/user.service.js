@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import * as userRepository from "../repositories/user.repository.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
@@ -24,6 +25,7 @@ export const createUser = async (user) => {
       );
 
     const newUser = await userRepository.createUser(user, opts);
+    await session.commitTransaction();
     return newUser;
   } catch (e) {
     await session.abortTransaction();
@@ -48,6 +50,7 @@ export const authenticateUser = async (identifier, password) => {
 
     const token = jwtUtil.generateToken({ id: user._id, role: user.role });
     await userRepository.addToken(user._id, token.token, opts);
+    await session.commitTransaction();
     return token;
   } catch (e) {
     await session.abortTransaction();

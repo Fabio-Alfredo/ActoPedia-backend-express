@@ -27,6 +27,7 @@ export const createActor = async (actor, user) => {
     actor.createFor = { user: user._id, date: new Date() };
 
     const newActor = await actorRepository.createActor(actor, opts);
+    await session.commitTransaction();
     return newActor;
   } catch (e) {
     await session.abortTransaction();
@@ -78,6 +79,7 @@ export const updateOneActor = async (actorId, actor, user) => {
       user._id,
       opts
     );
+    await session.commitTransaction();
     return updatedActor;
   } catch (e) {
     await session.abortTransaction();

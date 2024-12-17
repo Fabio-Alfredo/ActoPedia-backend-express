@@ -2,15 +2,15 @@ import Review from "../models/reviews.model.js";
 
 export const createRevew = async (review, opts) => {
   const newReview = new Review(review);
-  return await newReview.save(opts);
+  const reviewSaved = await newReview.save(opts);
+  return reviewSaved;
 };
 
 export const updateReview = async (reviewId, review, opts) => {
   return await Review.findByIdAndUpdate(
     { _id: reviewId },
     review,
-    { new: true },
-    opts
+    { new: true, opts },
   );
 };
 

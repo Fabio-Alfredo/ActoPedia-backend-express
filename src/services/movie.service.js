@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import * as movieRerpository from "../repositories/movie.repository.js";
 import * as actorService from "../services/actor.service.js";
 import errorCodes from "../utils/errorCodes.util.js";
@@ -22,6 +23,7 @@ export const createMovie = async (movie, user) => {
       );
     movie.createFor = { user: user._id, date: new Date() };
     const newMovie = await movieRerpository.createMovie(movie, opts);
+    await session.commitTransaction();
     return newMovie;
   } catch (e) {
     await session.abortTransaction();
@@ -68,6 +70,7 @@ export const addActorToMovie = async (movieId, personajes) => {
       actors,
       opts
     );
+    await session.commitTransaction();
     return updatedMovie;
   } catch (e) {
     await session.abortTransaction();
@@ -156,6 +159,7 @@ export const updateMovie = async (movieId, movie, user) => {
       user._id,
       opts
     );
+    await session.commitTransaction();
     return updatedMovie;
   } catch (e) {
     await session.abortTransaction();

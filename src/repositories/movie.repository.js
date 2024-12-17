@@ -14,8 +14,7 @@ export const addActors = async (movieId, actors, opts) => {
   return await Movie.findByIdAndUpdate(
     { _id: movieId },
     { $addToSet: { actors } },
-    { new: true },
-    opts
+    { new: true, opts }
   );
 };
 
@@ -40,8 +39,7 @@ export const addReview = async (movieId, reviewId, opts) => {
   return await Movie.findByIdAndUpdate(
     { _id: movieId },
     { $addToSet: { reviews: reviewId } },
-    { new: true },
-    opts
+    { new: true, opts }
   );
 };
 
@@ -57,7 +55,6 @@ export const updateMovie = async (movieId, movie, id, opts) => {
         },
       },
     },
-    { new: true },
-    opts
+    { new: true, opts }
   );
 };
