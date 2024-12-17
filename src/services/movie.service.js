@@ -4,7 +4,7 @@ import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 import saveImage from "../utils/saveImage.util.js";
 
-export const createMovie = async (movie) => {
+export const createMovie = async (movie, user) => {
   try {
     const image = await saveImage(movie.image, "movies");
     if (!image)
@@ -17,7 +17,7 @@ export const createMovie = async (movie) => {
         "Movie already exists",
         errorCodes.MOVIE.ALREADY_EXISTS
       );
-
+    movie.createFor = { user:user._id, date: new Date() };
     const newMovie = await movieRerpository.createMovie(movie);
     return newMovie;
   } catch (e) {
@@ -101,7 +101,7 @@ export const addReviewToMovie = async (movieId, reviewId) => {
   }
 };
 
-export const updateMovie = async (movieId, movie) => {
+export const updateMovie = async (movieId, movie, user) => {
   try{
     if(movie.image){
       const image = await saveImage(movie.image, "movies");
@@ -115,7 +115,7 @@ export const updateMovie = async (movieId, movie) => {
     if(!existingMovie)
       throw new ServiceError("Movie not exits", errorCodes.MOVIE.MOVIE_NOT_EXISTS);
 
-    const updatedMovie = await movieRerpository.updateMovie(movieId, movie);
+    const updatedMovie = await movieRerpository.updateMovie(movieId, movie, user._id);
     return updatedMovie;
   }catch(e){
     throw new ServiceError(

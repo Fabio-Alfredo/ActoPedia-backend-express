@@ -11,7 +11,11 @@ export const findMovieByTitle = async (title) => {
 };
 
 export const addActors = async (movieId, actors) => {
-  return await Movie.findByIdAndUpdate({ _id: movieId }, { $addToSet: { actors } }, { new: true });
+  return await Movie.findByIdAndUpdate(
+    { _id: movieId },
+    { $addToSet: { actors } },
+    { new: true }
+  );
 };
 
 export const findMovieById = async (movieId) => {
@@ -22,14 +26,13 @@ export const getMovies = async () => {
   return await Movie.find()
     .populate("actors.actor", "name")
     .populate({
-        path:"reviews",
-        populate:{
-            path:"user",
-            select:"username email"
-        },
-        select:"content qualification"
-    }
-    )
+      path: "reviews",
+      populate: {
+        path: "user",
+        select: "username email",
+      },
+      select: "content qualification",
+    });
 };
 
 export const addReview = async (movieId, reviewId) => {
@@ -40,6 +43,18 @@ export const addReview = async (movieId, reviewId) => {
   );
 };
 
-export const updateMovie = async (movieId, movie) => {
-  return await Movie.findByIdAndUpdate({ _id: movieId }, movie, { new: true });
-}
+export const updateMovie = async (movieId, movie, id) => {
+  return await Movie.findByIdAndUpdate(
+    { _id: movieId },
+    {
+      ...movie,
+      $push: {
+        updateFor: {
+          user: id,
+          date: Date.now(),
+        },
+      },
+    },
+    { new: true }
+  );
+};
