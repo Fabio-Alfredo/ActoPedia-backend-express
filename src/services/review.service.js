@@ -4,19 +4,18 @@ import * as movieService from "../services/movie.service.js";
 import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 
-export const createReview = async (review) => {
+export const createReview = async (review, user) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
     const opts = { session };
-    console.log(opts)
     const movie = await movieService.existingMovie(review.movie);
     if (!movie)
       throw new ServiceError("Movie not found", errorCodes.MOVIE.NOT_FOUND);
-
+    review.user = user._id;
     const newReview = await reviewRepository.createRevew(review, opts);
 
-    await movieService.addReviewToMovie(null, newReview._id, opts);
+    await movieService.addReviewToMovie(movie._id, newReview._id, opts);
     await session.commitTransaction();
     return newReview;
   } catch (e) {
@@ -28,11 +27,10 @@ export const createReview = async (review) => {
     );
   } finally {
     await session.endSession();
-    
   }
 };
 
-export const updateReview = async (reviewId, review) => {
+export const updateReview = async (reviewId, review, user) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
@@ -43,7 +41,7 @@ export const updateReview = async (reviewId, review) => {
         "Review not existing",
         errorCodes.REVIEW.REVIEW_NOT_EXISTS
       );
-    if (existingReview.user != review.user)
+    if (existingReview.user != user._id.toString())
       throw new ServiceError(
         "User not allowed to update review",
         errorCodes.REVIEW.NOT_ALLOWED

@@ -9,7 +9,7 @@ const actorRouter = Router();
 actorRouter.post(
   "/create",
   authMiddleware.authMiddleware,
-  authMiddleware.rolesMiddleware([config.role_one, config.role_three]),
+  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
   actorValidator.createActorValidator,
   runValidation,
   actorController.createActor
@@ -18,7 +18,7 @@ actorRouter.post(
 actorRouter.put(
   "/:actorId",
   authMiddleware.authMiddleware,
-  authMiddleware.rolesMiddleware([config.role_one, config.role_three]),
+  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
   actorValidator.updateActorValidator,
   runValidation,
   actorController.updateActor

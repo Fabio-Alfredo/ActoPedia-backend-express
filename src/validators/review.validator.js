@@ -11,11 +11,6 @@ export const createReview = [
         .withMessage("qualification is required")
         .isNumeric()
         .withMessage("qualification must be a number"),
-    body("user")
-        .exists()
-        .withMessage("user is required")
-        .isMongoId()
-        .withMessage("user must be a valid mongo id"),
     body("movie")
         .exists()
         .withMessage("movie is required")
