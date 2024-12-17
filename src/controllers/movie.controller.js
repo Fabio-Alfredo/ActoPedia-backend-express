@@ -6,7 +6,8 @@ export const createMovie = async (req, res, next)=>{
     try{
         const movie = req.body;
         movie.image = req.files[0];
-        const newMovie = await movieService.createMovie(movie);
+        const user = req.user;
+        const newMovie = await movieService.createMovie(movie, user);
         res.status(201).json(newMovie);
     }catch(e){
         switch(e.code){
@@ -66,10 +67,11 @@ export const updateMovie = async (req, res, next)=>{
     try{
         const movieId = req.params.movieId;
         const movie = req.body;
+        const user = req.user;
         if(req.files){
             movie.image = req.files[0];
         }
-        const updatedMovie = await movieService.updateMovie(movieId, movie);
+        const updatedMovie = await movieService.updateMovie(movieId, movie, user);
         res.status(200).json(updatedMovie);
     }catch(e){
         switch(e.code){

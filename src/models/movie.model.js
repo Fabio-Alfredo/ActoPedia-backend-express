@@ -44,8 +44,16 @@ const movieSchema = new Schema(
             default: MOVIE_GENERS.OTRO,
             required: true,
         },
-
-
+        createFor:{
+            user:{type:Schema.Types.ObjectId, ref:"User"},
+            date:Date,
+        },
+        updateFor:[
+            {
+                user:{type:Schema.Types.ObjectId, ref:"User"},
+                date:Date,
+            }
+        ]
     },
     {
         timestamps: true,

@@ -9,8 +9,8 @@ const movieRouter = Router();
 
 movieRouter.post(
   "/create",
-  // authMiddleware.authMiddleware,
-  // authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
+  authMiddleware.authMiddleware,
+  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
   movieValidator.createMovieValidator,
   runValidation,
   movieController.createMovie
