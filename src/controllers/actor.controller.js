@@ -44,7 +44,7 @@ export const updateActor = async (req, res, next)=>{
         if(req.files){
             actor.image = req.files[0];
         }
-        const updatedActor = await actorService.updateOneActor(actorId, actor);
+        const updatedActor = await actorService.updateOneActor(actorId, actor, req.user);
         res.status(200).json(updatedActor);
     }catch(e){
         switch(e.code){

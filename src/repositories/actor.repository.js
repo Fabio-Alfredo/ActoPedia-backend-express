@@ -9,8 +9,19 @@ export const createActor = async (actor, userId) => {
   return await newActor.save();
 };
 
-export const updateActor = async (actorId, actor) => {
-  return await Actor.findByIdAndUpdate({ _id: actorId }, actor, { new: true });
+export const updateActor = async (actorId, actor, userId) => {
+  return await Actor.findByIdAndUpdate(
+    { _id: actorId },
+    { ...actor, 
+      $push:{
+        updateFor:{
+          user:userId,
+          date:Date.now()
+        }
+      }
+     },
+    { new: true }
+  );
 };
 
 export const getActors = async () => {
