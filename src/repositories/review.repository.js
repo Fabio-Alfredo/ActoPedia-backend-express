@@ -17,3 +17,7 @@ export const updateReview = async (reviewId, review, opts) => {
 export const findReviewById = async (reviewId) => {
   return await Review.findById(reviewId);
 };
+
+export const deleteReview = async (reviewId, opts) => {
+  return await Review.findByIdAndDelete(reviewId, opts);
+}

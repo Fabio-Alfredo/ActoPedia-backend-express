@@ -21,5 +21,12 @@ reviewRouter.put(
   runValidation,
   reviewController.updateReview
 );
+reviewRouter.delete(
+  "/delete/:reviewId",
+  authMiddleware.authMiddleware,
+  reviewValidator.deleteReview,
+  runValidation,  
+  reviewController.deleteReview
+);
 
 export default reviewRouter;

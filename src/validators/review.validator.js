@@ -34,3 +34,12 @@ export const updateReview = [
         .withMessage("qualification must be a number"),
 
 ]
+
+export const deleteReview = [
+    param("reviewId")
+        .exists()
+        .withMessage("reviewId is required")
+        .isMongoId()
+        .withMessage("reviewId must be a valid mongo id")
+        .bail(),
+]

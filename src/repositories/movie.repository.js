@@ -58,3 +58,11 @@ export const updateMovie = async (movieId, movie, id, opts) => {
     { new: true, opts }
   );
 };
+
+export const deleteReviewInMovie = async (movieId, reviewId, opts) => {
+  return await Movie.findByIdAndUpdate(
+    { _id: movieId },
+    { $pull: { reviews: reviewId } },
+    opts
+  );
+};

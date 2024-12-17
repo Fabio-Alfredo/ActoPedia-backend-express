@@ -42,3 +42,26 @@ export const updateReview = async (req, res, next)=>{
         }
     }
 }
+
+export const deleteReview = async (req, res, next)=>{
+    try{
+        const reviewId = req.params.reviewId;
+        const user = req.user;
+        await reviewService.deleteReview(reviewId, user);
+        res.status(204).json({message: 'Review deleted'});
+    }catch(e){
+        switch(e){
+            case errorCodes.REVIEW.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            case errorCodes.REVIEW.REVIEW_NOT_EXISTS:
+                next(createHttpError(404, e.message));
+                break;
+            case errorCodes.REVIEW.NOT_ALLOWED:
+                next(createHttpError(403, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

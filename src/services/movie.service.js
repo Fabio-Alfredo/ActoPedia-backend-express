@@ -171,3 +171,23 @@ export const updateMovie = async (movieId, movie, user) => {
     await session.endSession();
   }
 };
+
+export const deleteReviewInMovie = async (movieId, reviewId, opts) => {
+  try {
+    const movie = await movieRerpository.findMovieById(movieId);
+    if (!movie)
+      throw new ServiceError("Movie not found", errorCodes.MOVIE.NOT_FOUND);
+
+    const updatedMovie = await movieRerpository.deleteReviewInMovie(
+      movie._id,
+      reviewId,
+      opts
+    );
+    return updatedMovie;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while deleting review in movie",
+      e.code || errorCodes.MOVIE.NOT_FOUND
+    );
+  }
+}
