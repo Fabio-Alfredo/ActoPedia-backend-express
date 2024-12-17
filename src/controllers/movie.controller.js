@@ -61,3 +61,29 @@ export const getMovies = async (req, res, next)=>{
         }
     }
 }
+
+export const updateMovie = async (req, res, next)=>{
+    try{
+        const movieId = req.params.movieId;
+        const movie = req.body;
+        if(req.files){
+            movie.image = req.files[0];
+        }
+        const updatedMovie = await movieService.updateMovie(movieId, movie);
+        res.status(200).json(updatedMovie);
+    }catch(e){
+        switch(e.code){
+            case errorCodes.MOVIE.NOT_FOUND:
+                next(createHttpError(404, e.message));
+                break;
+            case errorCodes.IMAGES.NOT_FOUND:
+                next(createHttpError(500, e.message));
+                break;
+            case errorCodes.MOVIE.MOVIE_NOT_EXISTS:
+                next(createHttpError(404, e.message));
+                break;
+            default:
+                next(e);
+        }
+    }
+}

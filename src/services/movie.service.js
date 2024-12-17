@@ -100,3 +100,27 @@ export const addReviewToMovie = async (movieId, reviewId) => {
     );
   }
 };
+
+export const updateMovie = async (movieId, movie) => {
+  try{
+    if(movie.image){
+      const image = await saveImage(movie.image, "movies");
+      if(!image)
+        throw new ServiceError("Error saving image", errorCodes.IMAGES.NOT_FOUND);
+      
+      movie.image = image;
+    }
+
+    const existingMovie = await movieRerpository.findMovieById(movieId);
+    if(!existingMovie)
+      throw new ServiceError("Movie not exits", errorCodes.MOVIE.MOVIE_NOT_EXISTS);
+
+    const updatedMovie = await movieRerpository.updateMovie(movieId, movie);
+    return updatedMovie;
+  }catch(e){
+    throw new ServiceError(
+      e.message || "Internal server error while updating movie",
+      e.code || errorCodes.MOVIE.NOT_FOUND
+    );
+  }
+}

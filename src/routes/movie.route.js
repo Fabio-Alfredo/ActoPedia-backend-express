@@ -9,11 +9,20 @@ const movieRouter = Router();
 
 movieRouter.post(
   "/create",
-  authMiddleware.authMiddleware,
-  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
+  // authMiddleware.authMiddleware,
+  // authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
   movieValidator.createMovieValidator,
   runValidation,
   movieController.createMovie
+);
+
+movieRouter.put(
+  "/:movieId",
+  authMiddleware.authMiddleware,
+  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
+  movieValidator.updateMovieValidator,
+  runValidation,
+  movieController.updateMovie
 );
 
 movieRouter.put(
@@ -24,6 +33,8 @@ movieRouter.put(
   runValidation,
   movieController.addActorToMovie
 );
+
+
 movieRouter.get("/getMovies", movieController.getMovies);
 
 export default movieRouter;

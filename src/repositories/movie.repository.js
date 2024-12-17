@@ -39,3 +39,7 @@ export const addReview = async (movieId, reviewId) => {
     { new: true }
   );
 };
+
+export const updateMovie = async (movieId, movie) => {
+  return await Movie.findByIdAndUpdate({ _id: movieId }, movie, { new: true });
+}

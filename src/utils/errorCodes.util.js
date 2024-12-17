@@ -25,6 +25,7 @@ const errorCodes = {
         NOT_FOUND: 4000,
         ALREADY_EXISTS: 4001,
         ACTOR_NOT_EXISTS: 4002,
+        MOVIE_NOT_EXISTS: 4003,
     },
     REVIEW:{
         NOT_FOUND: 5000,
