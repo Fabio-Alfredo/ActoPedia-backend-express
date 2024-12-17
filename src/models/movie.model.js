@@ -41,7 +41,7 @@ const movieSchema = new Schema(
         genero:{
             type: String,
             enum: GENRES_LIST,
-            default: MOVIE_GENERS.OTRO
+            default: MOVIE_GENERS.OTRO,
             required: true,
         },
 
