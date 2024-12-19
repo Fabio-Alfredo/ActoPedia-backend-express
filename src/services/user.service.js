@@ -97,6 +97,11 @@ export const updateRoles = async (userId, role, admin) => {
         "User not exists",
         errorCodes.USER.USER_NOT_EXISTS
       );
+    if(req.user.email === existingUser.email)
+      throw new ServiceError(
+        "You can't change your own role",
+        errorCodes.USER.CANT_CHANGE_OWN_ROLE
+      );
 
     if (existingUser.role.includes(role))
       user = await userRepository.removeRole(userId, role, admin, opts);
