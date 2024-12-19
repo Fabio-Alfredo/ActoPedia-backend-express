@@ -20,18 +20,18 @@ const actorSchema = new Schema(
     },
     movies: [
       {
-        movie: { type: Schema.Types.ObjectId, ref: "Movie", inmutable: true },
-        personaje:{String, inmutable:true} ,
+        movie: { type: Schema.Types.ObjectId, ref: "Movie" },
+        personaje:{type:String } ,
       },
     ],
     createFor:{
-      user:{type:Schema.Types.ObjectId, ref:"User", inmutable:true},
-      date:{Date, inmutable:true},
+      user:{type:Schema.Types.ObjectId, ref:"User", immutable:true },
+      date:{type:Date, immutable:true },
     },
     updateFor:[
       {
-        user:{type:Schema.Types.ObjectId, ref:"User", inmutable:true},
-        date:{Date, inmutable:true},
+        user:{type:Schema.Types.ObjectId, ref:"User", immutable:true },
+        date:{type:Date, immutable:true },
         
       }
     ]

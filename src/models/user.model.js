@@ -42,9 +42,9 @@ const userSchema = new Schema(
         user: {
           type: Schema.Types.ObjectId,
           ref: "User",
-          inmutable: true,
+          immutable: true,
         },
-        date: {Date, inmutable: true},
+        date: {type:Date, immutable:true},
       },
     ],
     state:{
