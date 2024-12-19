@@ -45,3 +45,16 @@ export const loginValidator = [
     .withMessage("Password is required")
     .bail(),
 ]
+
+export const updatePasswordValidator = [
+  body("password")
+    .exists()
+    .withMessage("password is required")
+    .isString()
+    .withMessage("password must be a string"),
+  body("newPassword")
+    .exists()
+    .withMessage("newPassword is required")
+    .isString()
+    .withMessage("newPassword must be a string")
+]

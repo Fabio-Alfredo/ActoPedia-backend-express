@@ -32,15 +32,3 @@ export const updateStateValidator = [
     .withMessage("userId must be a valid mongo id"),
 ]
 
-export const updatePasswordValidator = [
-  body("password")
-    .exists()
-    .withMessage("password is required")
-    .isString()
-    .withMessage("password must be a string"),
-  body("newPassword")
-    .exists()
-    .withMessage("newPassword is required")
-    .isString()
-    .withMessage("newPassword must be a string")
-]
