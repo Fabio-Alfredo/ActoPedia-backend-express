@@ -24,6 +24,9 @@ const errorCodes = {
     IMAGES:{
         NOT_FOUND: 3000,
     },
+    EMAIL:{
+        ERROR_SENDING_EMAIL: 3001,
+    },
     MOVIE:{
         NOT_FOUND: 4000,
         ALREADY_EXISTS: 4001,

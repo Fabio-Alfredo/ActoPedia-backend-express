@@ -12,7 +12,10 @@ const {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
-  PREFIX_TOKEN
+  PREFIX_TOKEN,
+  COMPANY_NAME,
+  COMPANY_EMAIL,
+  COMPANY_PASSWORD_EMAIL,
 } = process.env;
 
 const validatorEnv = (env, name) => {
@@ -41,4 +44,10 @@ export const config = {
     "CLOUDINARY_API_SECRET"
   ),
   prefixToken: validatorEnv(PREFIX_TOKEN, "PREFIX_TOKEN"),
+  companyName: validatorEnv(COMPANY_NAME, "COMPANY_NAME"),
+  companyEmail: validatorEnv(COMPANY_EMAIL, "COMPANY_EMAIL"),
+  companyPasswordEmail: validatorEnv(
+    COMPANY_PASSWORD_EMAIL,
+    "COMPANY_PASSWORD_EMAIL"
+  ),
 };

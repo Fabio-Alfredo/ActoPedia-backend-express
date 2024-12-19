@@ -10,7 +10,7 @@ export const registerValidator = [
     .withMessage("Username must be between 3 and 20 characters")
     .bail(),
   body("email")
-  .trim()
+    .trim()
     .isEmail()
     .withMessage("Email is not valid")
     .notEmpty()
@@ -39,12 +39,8 @@ export const loginValidator = [
     .notEmpty()
     .withMessage("Username or email is required")
     .bail(),
-  body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("Password is required")
-    .bail(),
-]
+  body("password").trim().notEmpty().withMessage("Password is required").bail(),
+];
 
 export const updatePasswordValidator = [
   body("password")
@@ -56,5 +52,15 @@ export const updatePasswordValidator = [
     .exists()
     .withMessage("newPassword is required")
     .isString()
-    .withMessage("newPassword must be a string")
-]
+    .withMessage("newPassword must be a string"),
+];
+
+export const recoverPasswordValidator = [
+  body("email")
+    .isEmail()
+    .withMessage("email is invalid")
+    .exists()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("email is invalid"),
+];

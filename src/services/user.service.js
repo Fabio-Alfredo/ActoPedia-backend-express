@@ -4,6 +4,7 @@ import errorCodes from "../utils/errorCodes.util.js";
 import { ServiceError } from "../errors/ServiceError.error.js";
 import jwtUtil from "../utils/jwt.util.js";
 import { USER_STATES } from "../utils/constans/statesuser.util.js";
+import { sendEmail } from "../utils/sedEmails.util.js";
 
 export const createUser = async (user) => {
   const session = await mongoose.startSession();
@@ -156,11 +157,12 @@ export const updateStateUser = async (userId, state, admin) => {
   }
 };
 
-export const updatePassword = async (user, password, newPassword) => {
+export const updatePassword = async (userId, password, newPassword) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
     const opts = { session };
+    const user = await userRepository.getUserById(userId);
     if (!user || !(await user.comparePassword(password)))
       throw new ServiceError(
         "Invalid credential user",
@@ -169,7 +171,7 @@ export const updatePassword = async (user, password, newPassword) => {
 
     const updateUser = await userRepository.updatePassword(
       user,
-      newPassword, 
+      newPassword,
       opts
     );
     await session.commitTransaction();
@@ -178,6 +180,35 @@ export const updatePassword = async (user, password, newPassword) => {
     await session.abortTransaction();
     throw new ServiceError(
       e.message || "Internal server error while updating user password",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
+  } finally {
+    await session.endSession();
+  }
+};
+
+export const generateEmail = async (email) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const opts = { session };
+    const user = await userRepository.getUserByEmail(email);
+    if (!user)
+      throw new ServiceError(
+         "The email address is not registered",
+        errorCodes.USER.USER_NOT_EXISTS
+      );
+    const passwordTemp = Math.random().toString(36).slice(-8);
+    await userRepository.updatePassword(user, passwordTemp, opts);
+
+    await sendEmail(email, user.username, passwordTemp);
+
+    await session.commitTransaction();
+    return user._id;
+  } catch (e) {
+    await session.abortTransaction();
+    throw new ServiceError(
+      e.message || "Internal server error while generating password temp",
       e.code || errorCodes.USER.NOT_FOUND
     );
   } finally {

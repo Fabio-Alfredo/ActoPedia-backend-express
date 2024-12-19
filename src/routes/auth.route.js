@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as userController from "../controllers/auth.controller.js";
+import * as authController from "../controllers/auth.controller.js";
 import * as authValidator from "../validators/auth.validator.js";
 import * as authMiddleware from "../middlewares/auth.middleware.js";
 import runValidation from "../middlewares/validator.middleware.js";
@@ -10,20 +10,27 @@ authRouter.post(
   "/register",
   authValidator.registerValidator,
   runValidation,
-  userController.register
+  authController.register
 );
 authRouter.post(
   "/login",
   authValidator.loginValidator,
   runValidation,
-  userController.login
+  authController.login
 );
 authRouter.patch(
-  "/password",
+  "/password/:userId",
   authMiddleware.authMiddleware,
   authValidator.updatePasswordValidator,
   runValidation,
-  userController.updatePasswordInUser
+  authController.updatePasswordInUser
+);
+
+authRouter.post(
+  "/recover-password",
+  authValidator.recoverPasswordValidator,
+  runValidation,
+  authController.recoverPassword
 );
 
 
