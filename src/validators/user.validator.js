@@ -1,5 +1,6 @@
 import { body, param } from "express-validator";
 import { config } from "../configs/config.js";
+import { USER_STATES } from "../utils/constans/statesuser.util.js"
 
 export const updateRoleValidator = [
   body("role")
@@ -15,3 +16,18 @@ export const updateRoleValidator = [
     .isMongoId()
     .withMessage("userId must be a valid mongo id"),
 ];
+
+export const updateStateValidator = [
+  body("state")
+    .exists()
+    .withMessage("state is required")
+    .isString()
+    .withMessage("state must be a string")
+    .isIn(Object.values(USER_STATES))
+    .withMessage("state is invalid"),
+  param("userId")
+    .exists()
+    .withMessage("userId is required")
+    .isMongoId()
+    .withMessage("userId must be a valid mongo id"),
+]

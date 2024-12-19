@@ -8,12 +8,21 @@ import { config } from "../configs/config.js";
 const userRouter = Router();
 
 userRouter.patch(
-  "/update/:userId",
+  "/role/:userId",
   authMiddleware.authMiddleware,
   authMiddleware.rolesMiddleware([config.role_two]),
   userValidator.updateRoleValidator,
   runValidation,
   userCotroller.updateRoleInUser
+);
+
+userRouter.patch(
+  "/state/:userId",
+  authMiddleware.authMiddleware,
+  authMiddleware.rolesMiddleware([config.role_two]),
+  userValidator.updateStateValidator,
+  runValidation,
+  userCotroller.updateStateInUser
 );
 
 export default userRouter;

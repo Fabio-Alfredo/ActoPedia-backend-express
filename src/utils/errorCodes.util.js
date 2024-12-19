@@ -12,6 +12,7 @@ const errorCodes = {
         USER_NOT_EXISTS: 1009,
         INVALID_PASSWORD: 1010,
         USER_BLOCKED: 1011,
+        CANT_CHANGE_OWN_STATE: 1012,
         
     },
     ACTOR:{

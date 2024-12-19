@@ -64,3 +64,19 @@ export const removeRole = async (userId, role, admin, opts) => {
     { new: true, opts }
   );
 }
+
+export const updateState = async (userId, state, admin, opts) => {
+  return await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      state,
+      $push: {
+        updateRoleBy: {
+          user: admin,
+          date: Date.now(),
+        },
+      },
+    },
+    { new: true, opts }
+  );
+}

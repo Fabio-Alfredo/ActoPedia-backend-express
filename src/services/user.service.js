@@ -48,7 +48,7 @@ export const authenticateUser = async (identifier, password) => {
 
     if (!user || !(await user.comparePassword(password)))
       throw new ServiceError("Invalid credentials", errorCodes.USER.NOT_FOUND);
-    
+
     if (user.state === USER_STATES.BLOCKED)
       throw new ServiceError("User is blocked", errorCodes.USER.USER_BLOCKED);
 
@@ -97,7 +97,7 @@ export const updateRoles = async (userId, role, admin) => {
         "User not exists",
         errorCodes.USER.USER_NOT_EXISTS
       );
-    if(req.user.email === existingUser.email)
+    if (req.user.email === existingUser.email)
       throw new ServiceError(
         "You can't change your own role",
         errorCodes.USER.CANT_CHANGE_OWN_ROLE
@@ -117,5 +117,41 @@ export const updateRoles = async (userId, role, admin) => {
     );
   } finally {
     await session.endSession();
+  }
+};
+
+export const updateStateUser = async (userId, state, admin) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const opts = { session };
+    const user = await userRepository.getUserById(userId);
+    if (!user)
+      throw new ServiceError(
+        "User not exists",
+        errorCodes.USER.USER_NOT_EXISTS
+      );
+    if (user.email === admin.email)
+      throw new ServiceError(
+        "You can't change your own state",
+        errorCodes.USER.CANT_CHANGE_OWN_STATE
+      );
+
+    const updatedUser = await userRepository.updateState(
+      userId,
+      state,
+      admin,
+      opts
+    );
+    await session.commitTransaction();
+    return updatedUser;
+  } catch (e) {
+    await session.abortTransaction();
+    throw new ServiceError(
+      e.message || "Internal server error while updating user state",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
+  } finally {
+    session.endSession();
   }
 };
