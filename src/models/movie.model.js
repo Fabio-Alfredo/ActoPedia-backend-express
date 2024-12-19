@@ -16,14 +16,15 @@ const movieSchema = new Schema(
         },
         actors:[
             {
-                actor:{ type: Schema.Types.ObjectId, ref: 'Actor' },
-                personaje: String,
+                actor:{ type: Schema.Types.ObjectId, ref: 'Actor', inmutable: true },
+                personaje: {String, inmutable:true},
             }
         ],
         reviews:[
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Review'
+                ref: 'Review',
+                inmutable: true,
             }
         ],
         image:{
@@ -45,13 +46,13 @@ const movieSchema = new Schema(
             required: true,
         },
         createFor:{
-            user:{type:Schema.Types.ObjectId, ref:"User"},
-            date:Date,
+            user:{type:Schema.Types.ObjectId, ref:"User", inmutable:true},
+            date:{Date, inmutable:true},
         },
         updateFor:[
             {
-                user:{type:Schema.Types.ObjectId, ref:"User"},
-                date:Date,
+                user:{type:Schema.Types.ObjectId, ref:"User", inmutable:true},
+                date:{Date, inmutable:true},
             }
         ]
     },
