@@ -46,3 +46,27 @@ export const updateStateInUser = async (req, res, next) => {
     }
   }
 };
+
+export const updatePasswordInUser = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { password, newPassword } = req.body;
+    const newUser = await userService.updatePassword(
+      user,
+      password,
+      newPassword
+    );
+    res.status(201).json(newUser);
+  } catch (e) {
+    switch (e.code) {
+      case errorCodes.USER.NOT_FOUND:
+        next(createHttpError(409, e.message));
+        break;
+      case errorCodes.USER.INVALID_CREDENTIALS:
+        next(createHttpError(500, e.message));
+        break;
+      default:
+        next(e);
+    }
+  }
+};

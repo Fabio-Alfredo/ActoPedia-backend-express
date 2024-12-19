@@ -2,7 +2,7 @@ const errorCodes = {
     USER:{
         NOT_FOUND: 1000,
         ALREADY_EXISTS: 1001,
-        INVALID_EMAIL: 1002,
+        INVALID_CREDENTIALS: 1002,
         INVALID_PASSWORD:   1003,
         INVALID_NAME: 1004,
         INVALID_ID: 1005,
@@ -10,6 +10,7 @@ const errorCodes = {
         INVALID_STATUS: 1007,
         ERROR_LOGIN: 1008,
         USER_NOT_EXISTS: 1009,
+
         INVALID_PASSWORD: 1010,
         USER_BLOCKED: 1011,
         CANT_CHANGE_OWN_STATE: 1012,

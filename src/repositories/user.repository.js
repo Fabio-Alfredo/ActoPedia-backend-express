@@ -36,7 +36,7 @@ export const addRole = async (userId, role, admin, opts) => {
     { _id: userId },
     {
       $addToSet: {
-        role:role, 
+        role: role,
         updateRoleBy: {
           user: admin,
           date: Date.now(),
@@ -63,7 +63,7 @@ export const removeRole = async (userId, role, admin, opts) => {
     },
     { new: true, opts }
   );
-}
+};
 
 export const updateState = async (userId, state, admin, opts) => {
   return await User.findByIdAndUpdate(
@@ -79,4 +79,9 @@ export const updateState = async (userId, state, admin, opts) => {
     },
     { new: true, opts }
   );
-}
+};
+
+export const updatePassword = async (user, newPassword, opts) => {
+  user.password = newPassword;
+  return await user.save(opts);
+};

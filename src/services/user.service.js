@@ -155,3 +155,32 @@ export const updateStateUser = async (userId, state, admin) => {
     session.endSession();
   }
 };
+
+export const updatePassword = async (user, password, newPassword) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    const opts = { session };
+    if (!user || !(await user.comparePassword(password)))
+      throw new ServiceError(
+        "Invalid credential user",
+        errorCodes.USER.INVALID_CREDENTIALS
+      );
+
+    const updateUser = await userRepository.updatePassword(
+      user,
+      newPassword, 
+      opts
+    );
+    await session.commitTransaction();
+    return updateUser;
+  } catch (e) {
+    await session.abortTransaction();
+    throw new ServiceError(
+      e.message || "Internal server error while updating user password",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
+  } finally {
+    await session.endSession();
+  }
+};

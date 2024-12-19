@@ -25,4 +25,12 @@ userRouter.patch(
   userCotroller.updateStateInUser
 );
 
+userRouter.patch(
+  "/password",
+  authMiddleware.authMiddleware,
+  userValidator.updatePasswordValidator,
+  runValidation,
+  userCotroller.updatePasswordInUser
+);
+
 export default userRouter;
