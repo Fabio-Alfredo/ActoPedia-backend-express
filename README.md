@@ -179,6 +179,10 @@ Los principales endpoints de la API se detallan a continuación:
 - **Path:** `/password/:userId`
 - **Description:** Este endpoint permite al usuario cambiar su contraseña proporcionando su contraseña actual y estableciendo una nueva.
 
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
 ### Ejemplo de solicitud
 
 ```json
@@ -187,13 +191,14 @@ Los principales endpoints de la API se detallan a continuación:
   "newPassword": "password2"
 }
 ```
+
 #### Ejemplo de respuestas
 
 - **Exitosa:**
 
 ```json
 {
-    "message": "Updated password"
+  "message": "Updated password"
 }
 ```
 
@@ -201,23 +206,21 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "error": "Invalid credential user"
+  "error": "Invalid credential user"
 }
 ```
 
 ## Recovery Password
+
 - **Method:** `POST`
 - **Path:** `/recover-password`
 - **Description:** Este método permite a los usuarios recuperar su contraseña olvidada. Se envía un correo electrónico con una contraseña temporal, y posteriormente se puede utilizar el endpoint de actualización de contraseña para establecer una nueva segura.
 
-### Requisito de autenticacion 
-- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de JWT válido para proceder.
-- **Roles permitidos:** El usuario debe tener el rol USER para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
-
 ### Ejemplo de solicitud
+
 ```json
 {
-    "email":"fabioalfredo47@gmail.com"
+  "email": "fabioalfredo47@gmail.com"
 }
 ```
 
@@ -227,8 +230,8 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "message": "Email sent",
-    "data": "6764cb5c3481682095e6b427"
+  "message": "Email sent",
+  "data": "6764cb5c3481682095e6b427"
 }
 ```
 
@@ -236,6 +239,43 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "error": "The email address is not registered"
+  "error": "The email address is not registered"
+}
+```
+
+## Update Role
+
+- **Method:** `PATCH`
+- **Path:** `/recover-password`
+- **Description:** Este método permite asignar roles a los usuarios. Sólo puede ser accesado por usuarios con roles de mayor rango.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+### Ejemplo de solicitud
+
+```json
+{
+    "role":"admin"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+    "message": "Role updated successfully"
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "Access denied due to lack of permissions"
 }
 ```
