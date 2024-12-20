@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 export const registerValidator = [
   body("username")
@@ -43,6 +43,11 @@ export const loginValidator = [
 ];
 
 export const updatePasswordValidator = [
+  param("userId")
+    .exists()
+    .withMessage("userId is required")
+    .isMongoId()
+    .withMessage("userId must be a valid mongo id"),
   body("password")
     .exists()
     .withMessage("password is required")
