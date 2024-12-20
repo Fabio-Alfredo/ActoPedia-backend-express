@@ -110,15 +110,14 @@ Los principales endpoints de la API se detallan a continuación:
 - **Method:** `POST`
 - **Path:** `/register`
 - **Description:** Este endpoint permite el registro de nuevos usuarios dentro de la aplicacion
-- **Ejemplo de respuesta**
 
 #### Ejemplo de Solicitud
 
 ```json
 {
-  "username": "fabi",
-  "email": "fabi@gmail.com",
-  "password": "123456"
+  "username": "user",
+  "email": "user@gmail.com",
+  "password": "password"
 }
 ```
 
@@ -137,5 +136,39 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
   "error": "Email already in use"
+}
+```
+
+### Login de usuario
+
+- **Method:** `POST`
+- **Path:** `/login`
+- **Description:** Descripción: Este endpoint permite el inicio de sesión seguro para un usuario previamente registrado, permitiendo iniciar sesión ya sea con su dirección de correo electrónico o su nombre de usuario.
+
+#### Ejemplo de solicitud
+
+```json
+{
+  "identifier": "user@gmail.com",
+  "password": "password"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjRjYjVjMzQ4MTY4MjA5NWU2YjQyNyIsInJvbGUiOlsidXNlciIsImFkbWluIiwic3lzYWRtaW4iXSwiaWF0IjoxNzM0NzE1MTQ1LCJleHAiOjE3MzQ4MDE1NDV9.3PLEp7bzPI6_udZhoCPUaMCq98AbEOEcTilXun8rbeU",
+  "expires_in": 1734801545400
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Invalid credentials"
 }
 ```
