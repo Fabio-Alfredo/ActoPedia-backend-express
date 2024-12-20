@@ -210,6 +210,10 @@ Los principales endpoints de la API se detallan a continuación:
 - **Path:** `/recover-password`
 - **Description:** Este método permite a los usuarios recuperar su contraseña olvidada. Se envía un correo electrónico con una contraseña temporal, y posteriormente se puede utilizar el endpoint de actualización de contraseña para establecer una nueva segura.
 
+### Requisito de autenticacion 
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de JWT válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol USER para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
 ### Ejemplo de solicitud
 ```json
 {
