@@ -258,7 +258,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "role":"admin"
+  "role": "rol1"
 }
 ```
 
@@ -268,7 +268,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "message": "Role updated successfully"
+  "message": "Role updated successfully"
 }
 ```
 
@@ -276,7 +276,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "error": "Access denied due to lack of permissions"
+  "error": "Access denied due to lack of permissions"
 }
 ```
 
@@ -295,7 +295,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "state":"blocked"
+  "state": "blocked"
 }
 ```
 
@@ -305,7 +305,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "message": "User blocked successfully"
+  "message": "User blocked successfully"
 }
 ```
 
@@ -313,6 +313,62 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "error": "User not exists"
+  "error": "User not exists"
+}
+```
+
+## Get Users
+
+- **Method:** `PATCH`
+- **Path:** `/state/:userId`
+- **Description:** Este metodo permite obtener toda la informacion de todos los usuarios registrados dentro de la aplicacion.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+    [ {
+            "_id": "6764cb5c3481682095e6b427",
+            "username": "user",
+            "email": "user@gmail.com",
+            "reviews": [],
+            "role": [
+                "rol1",
+                "rol2",
+                "rol3"
+            ],
+            "state": "active",
+            "updateRoleBy": [
+                {
+                    "user": "6764cb5c3481682095e6b427",
+                    "date": "2024-12-20T01:56:29.462Z",
+                    "_id": "6764cecd7e750a97dd2c719f"
+                },
+                {
+                    "user": "6764cb5c3481682095e6b427",
+                    "date": "2024-12-20T01:56:36.397Z",
+                    "_id": "6764ced47e750a97dd2c71a8"
+                }
+            ],
+            "createdAt": "2024-12-20T01:41:48.051Z",
+            "updatedAt": "2024-12-20T17:55:35.824Z",
+            "__v": 0
+        }
+    ]
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Internal server error while fetching users"
 }
 ```

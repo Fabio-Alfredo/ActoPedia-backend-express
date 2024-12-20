@@ -88,5 +88,5 @@ export const updatePassword = async (user, newPassword, opts) => {
 
 
 export const getUsers = async () => {
-  return await User.find();
+  return await User.find().select('-password -token');
 };
