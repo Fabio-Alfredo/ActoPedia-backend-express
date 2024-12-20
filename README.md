@@ -246,8 +246,8 @@ Los principales endpoints de la API se detallan a continuación:
 ## Update Role
 
 - **Method:** `PATCH`
-- **Path:** `/recover-password`
-- **Description:** Este método permite asignar roles a los usuarios. Sólo puede ser accesado por usuarios con roles de mayor rango.
+- **Path:** `/role/:userId`
+- **Description:** Este método permite asignar roles a los usuarios, el `id` del usuario a editar debe ser enviado por params ademas si el usuario ya contiene dicho rol sera removido. Sólo puede ser accesado por usuarios con roles de mayor rango.
 
 ### Requisito de autenticacion
 
@@ -277,5 +277,42 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
     "error": "Access denied due to lack of permissions"
+}
+```
+
+## Update State
+
+- **Method:** `PATCH`
+- **Path:** `/state/:userId`
+- **Description:** Este metodo permite bloquear a los usuarios que realicen acciones indevidas dentor de la aplicacion, el `id` del usuario a bloquar debe ser enviado por params, puede ser accesido por roles de mayor rango.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+### Ejemplo de solicitud
+
+```json
+{
+    "state":"blocked"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+    "message": "User blocked successfully"
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "User not exists"
 }
 ```
