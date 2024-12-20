@@ -52,7 +52,7 @@ export const updatePasswordInUser = async (req, res, next) => {
       password,
       newPassword
     );
-    res.status(201).json(newUser);
+    res.status(201).json({message:"Updated password"});
   } catch (e) {
     switch (e.code) {
       case errorCodes.USER.NOT_FOUND:

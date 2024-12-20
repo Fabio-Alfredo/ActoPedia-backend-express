@@ -105,7 +105,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ## Endpoints para autenticacion /auth
 
-### Registro de usuario
+## Registro de usuario
 
 - **Method:** `POST`
 - **Path:** `/register`
@@ -139,11 +139,11 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-### Login de usuario
+## Login de usuario
 
 - **Method:** `POST`
 - **Path:** `/login`
-- **Description:** Descripción: Este endpoint permite el inicio de sesión seguro para un usuario previamente registrado, permitiendo iniciar sesión ya sea con su dirección de correo electrónico o su nombre de usuario.
+- **Description:** Este endpoint permite el inicio de sesión seguro para un usuario previamente registrado, permitiendo iniciar sesión ya sea con su dirección de correo electrónico o su nombre de usuario.
 
 #### Ejemplo de solicitud
 
@@ -170,5 +170,39 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
   "error": "Invalid credentials"
+}
+```
+
+## Update Password
+
+- **Method:** `PATCH`
+- **Path:** `/password/:userId`
+- **Description:** Este endpoint permite al usuario cambiar su contraseña proporcionando su contraseña actual y estableciendo una nueva.
+
+### Ejemplo de solicitud
+
+
+
+```json
+{
+  "password": "password",
+  "newPassword": "password2"
+}
+```
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+    "message": "Updated password"
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "Invalid credential user"
 }
 ```
