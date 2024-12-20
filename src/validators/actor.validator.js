@@ -35,3 +35,11 @@ export const updateActorValidator = [
     .withMessage("Biography is required")
     .bail(),
 ];
+
+export const getActorValidator = [
+  body("actorId")
+    .notEmpty()
+    .withMessage("Actor id is required")
+    .isMongoId()
+    .withMessage("Actor id must
+];

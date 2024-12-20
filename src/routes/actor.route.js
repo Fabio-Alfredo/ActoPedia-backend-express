@@ -34,6 +34,8 @@ actorRouter.get(
 actorRouter.get(
   "/:actorId",
   authMiddleware.authMiddleware,
+  actorValidator.getActorValidator,
+  runValidation,
   actorController.getActorById
 );
 

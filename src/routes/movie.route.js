@@ -42,8 +42,10 @@ movieRouter.get(
 
 movieRouter.get(
   "/:movieId",
-  movieController.getMovieById,
-  authMiddleware.authMiddleware
+  authMiddleware.authMiddleware,
+  movieValidator.getMovieValidator,
+  runValidation,
+  movieController.getMovieById
 );
 
 export default movieRouter;

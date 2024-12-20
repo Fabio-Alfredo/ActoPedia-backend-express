@@ -103,3 +103,13 @@ export const updateMovieValidator = [
     .withMessage("Genero must be one of: " + GENRES_LIST.join(", "))
     .bail(),
 ];
+
+
+export const getMovieValidator = [
+  param("movieId")
+    .notEmpty()
+    .withMessage("Movie id is required")
+    .isMongoId()
+    .withMessage("Movie id must be a valid mongo id")
+    .bail(),
+]
