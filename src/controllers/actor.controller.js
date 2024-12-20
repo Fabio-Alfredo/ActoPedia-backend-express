@@ -77,6 +77,9 @@ export const getActorById = async (req, res, next) => {
       case errorCodes.ACTOR.NOT_FOUND:
         next(createHttpError(500, e.message));
         break;
+      case errorCodes.ACTOR.USER_NOT_EXISTS:
+        next(createHttpError(404, e.message));
+        break;
       default:
         next(e);
     }

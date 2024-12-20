@@ -128,7 +128,12 @@ export const addMovieInActor = async (actorId, movieId, personaje, opts) => {
 
 export const getActorById = async (actorId) => {
   try{
-    const actor = await actorRepository.getById(actorId);
+    const actor = await actorRepository.findActorById(actorId);
+    if(!actor)
+      throw new ServiceError(
+        "Actor not found",
+        errorCodes.ACTOR.ACTOR_NOT_EXISTS
+      );
     return actor;
   }catch(e){
     throw new ServiceError(
