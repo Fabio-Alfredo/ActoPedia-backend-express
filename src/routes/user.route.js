@@ -25,4 +25,11 @@ userRouter.patch(
   userCotroller.updateStateInUser
 );
 
+userRouter.get(
+  "/",
+  authMiddleware.authMiddleware,
+  authMiddleware.rolesMiddleware([config.role_two]),
+  userCotroller.getUsers
+);
+
 export default userRouter;

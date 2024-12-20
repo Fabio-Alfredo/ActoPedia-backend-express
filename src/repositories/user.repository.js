@@ -85,3 +85,8 @@ export const updatePassword = async (user, newPassword, opts) => {
   user.password = newPassword;
   return await user.save(opts);
 };
+
+
+export const getUsers = async () => {
+  return await User.find();
+};

@@ -195,7 +195,7 @@ export const generateEmail = async (email) => {
     const user = await userRepository.getUserByEmail(email);
     if (!user)
       throw new ServiceError(
-         "The email address is not registered",
+        "The email address is not registered",
         errorCodes.USER.USER_NOT_EXISTS
       );
     const passwordTemp = Math.random().toString(36).slice(-8);
@@ -213,5 +213,17 @@ export const generateEmail = async (email) => {
     );
   } finally {
     await session.endSession();
+  }
+};
+
+export const getUsers = async () => {
+  try {
+    const users = await userRepository.getUsers();
+    return users;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while fetching users",
+      e.code || errorCodes.USER.NOT_FOUND
+    );
   }
 };

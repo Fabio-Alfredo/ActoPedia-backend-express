@@ -47,3 +47,17 @@ export const updateStateInUser = async (req, res, next) => {
   }
 };
 
+export const getUsers = async (req, res, next) => {
+  try {
+    const users = await userService.getUsers();
+    res.status(200).json(users);
+  } catch (e) {
+    switch (e.code) {
+      case errorCodes.USER.NOT_FOUND:
+        next(createHttpError(409, e.message));
+        break;
+      default:
+        next(e);
+    }
+  }
+};
