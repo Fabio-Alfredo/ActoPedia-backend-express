@@ -191,3 +191,18 @@ export const deleteReviewInMovie = async (movieId, reviewId, opts) => {
     );
   }
 }
+
+export const getMovieById = async (movieId) => {
+  try {
+    const movie = await movieRerpository.findMovieById(movieId);
+    if (!movie)
+      throw new ServiceError("Movie not found", errorCodes.MOVIE.MOVIE_NOT_EXISTS);
+
+    return movie;
+  } catch (e) {
+    throw new ServiceError(
+      e.message || "Internal server error while getting movie",
+      e.code || errorCodes.MOVIE.NOT_FOUND
+    );
+  }
+}

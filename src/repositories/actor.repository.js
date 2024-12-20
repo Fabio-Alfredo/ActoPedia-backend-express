@@ -40,7 +40,3 @@ export const addMovie = async (actorId, movieId, personaje, opts) => {
 export const findActorByNameAndAge = async (name, age) => {
   return await Actor.findOne({ name, age });
 };
-
-export const getById = async (actorId) => {
-  return await Actor.findById(actorId);
-}

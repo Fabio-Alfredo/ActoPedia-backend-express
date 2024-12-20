@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as movieController from "../controllers/movie.controller.js";
 import * as movieValidator from "../validators/movie.validator.js";
-import *as authMiddleware from "../middlewares/auth.middleware.js"
+import * as authMiddleware from "../middlewares/auth.middleware.js";
 import runValidation from "../middlewares/validator.middleware.js";
 import { config } from "../configs/config.js";
 
@@ -34,7 +34,16 @@ movieRouter.put(
   movieController.addActorToMovie
 );
 
+movieRouter.get(
+  "/getMovies",
+  movieController.getMovies,
+  authMiddleware.authMiddleware
+);
 
-movieRouter.get("/getMovies", movieController.getMovies);
+movieRouter.get(
+  "/:movieId",
+  movieController.getMovieById,
+  authMiddleware.authMiddleware
+);
 
 export default movieRouter;
