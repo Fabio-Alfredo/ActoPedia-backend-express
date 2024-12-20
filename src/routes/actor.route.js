@@ -24,6 +24,17 @@ actorRouter.put(
   actorController.updateActor
 );
 
-actorRouter.get("/", actorController.getActors);
+actorRouter.get(
+  "/",
+  authMiddleware.authMiddleware,
+  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
+  runValidation,
+  actorController.getActors
+);
+actorRouter.get(
+  "/:actorId",
+  authMiddleware.authMiddleware,
+  actorController.getActorById
+);
 
 export default actorRouter;

@@ -125,3 +125,15 @@ export const addMovieInActor = async (actorId, movieId, personaje, opts) => {
     );
   }
 };
+
+export const getActorById = async (actorId) => {
+  try{
+    const actor = await actorRepository.getById(actorId);
+    return actor;
+  }catch(e){
+    throw new ServiceError(
+      e.message || "Internal server error while getting actor",
+      e.code || errorCodes.ACTOR.NOT_FOUND
+    );
+  }
+}
