@@ -10,10 +10,10 @@ const errorCodes = {
         INVALID_STATUS: 1007,
         ERROR_LOGIN: 1008,
         USER_NOT_EXISTS: 1009,
-
         INVALID_PASSWORD: 1010,
         USER_BLOCKED: 1011,
         CANT_CHANGE_OWN_STATE: 1012,
+        CANT_CHANGE_OWN_ROLE: 1013,
         
     },
     ACTOR:{
