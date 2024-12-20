@@ -181,8 +181,6 @@ Los principales endpoints de la API se detallan a continuación:
 
 ### Ejemplo de solicitud
 
-
-
 ```json
 {
   "password": "password",
@@ -204,5 +202,36 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
     "error": "Invalid credential user"
+}
+```
+
+## Recovery Password
+- **Method:** `POST`
+- **Path:** `/recover-password`
+- **Description:** Este método permite a los usuarios recuperar su contraseña olvidada. Se envía un correo electrónico con una contraseña temporal, y posteriormente se puede utilizar el endpoint de actualización de contraseña para establecer una nueva segura.
+
+### Ejemplo de solicitud
+```json
+{
+    "email":"fabioalfredo47@gmail.com"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+    "message": "Email sent",
+    "data": "6764cb5c3481682095e6b427"
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "The email address is not registered"
 }
 ```
