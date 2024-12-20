@@ -41,5 +41,5 @@ export const getActorValidator = [
     .notEmpty()
     .withMessage("Actor id is required")
     .isMongoId()
-    .withMessage("Actor id must
+    .withMessage("Actor id must be a valid mongo id")
 ];
