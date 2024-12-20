@@ -8,7 +8,7 @@ export const updateRoleInUser = async (req, res, next) => {
     const admin = req.user;
     const { role } = req.body;
     const newUser = await userService.updateRoles(userId, role, admin);
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "Role updated successfully" });
   } catch (e) {
     switch (e.code) {
       case errorCodes.USER.NOT_FOUND:
@@ -29,7 +29,7 @@ export const updateStateInUser = async (req, res, next) => {
     const userId = req.params.userId;
     const { state } = req.body;
     const newUser = await userService.updateStateUser(userId, state, admin);
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "User blocked successfully" });
   } catch (e) {
     switch (e.code) {
       case errorCodes.USER.NOT_FOUND:
