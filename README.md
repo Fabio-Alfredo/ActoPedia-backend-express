@@ -430,7 +430,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Get Users
+## Get Actors
 
 - **Method:** `PATCH`
 - **Path:** `/users/getActors`
@@ -475,7 +475,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Update Actors
+## Update Actor
 
 - **Method:** `PUT`
 - **Path:** `/actors/:actorId`
@@ -538,7 +538,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Get User By Id
+## Get Actor By Id
 
 - **Method:** `GET`
 - **Path:** `/users/:userId`

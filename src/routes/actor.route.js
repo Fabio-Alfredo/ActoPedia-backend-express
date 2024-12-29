@@ -27,7 +27,6 @@ actorRouter.put(
 actorRouter.get(
   "/getActors",
   authMiddleware.authMiddleware,
-  authMiddleware.rolesMiddleware([config.role_one, config.role_two]),
   runValidation,
   actorController.getActors
 );
