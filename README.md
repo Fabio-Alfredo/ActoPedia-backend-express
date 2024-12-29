@@ -405,20 +405,20 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "name": "one piece",
-    "age": 30,
-    "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
-    "biography": "Esta es una pelicula de one piece que se pone veregona desde el inicio",
-    "createFor": {
-        "user": "6764cb5c3481682095e6b427",
-        "date": "2024-12-29T00:51:51.025Z"
-    },
-    "_id": "67709d272093474048327ff6",
-    "movies": [],
-    "updateFor": [],
-    "createdAt": "2024-12-29T00:51:51.038Z",
-    "updatedAt": "2024-12-29T00:51:51.038Z",
-    "__v": 0
+  "name": "one piece",
+  "age": 30,
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
+  "biography": "Esta es una pelicula de one piece que se pone veregona desde el inicio",
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2024-12-29T00:51:51.025Z"
+  },
+  "_id": "67709d272093474048327ff6",
+  "movies": [],
+  "updateFor": [],
+  "createdAt": "2024-12-29T00:51:51.038Z",
+  "updatedAt": "2024-12-29T00:51:51.038Z",
+  "__v": 0
 }
 ```
 
@@ -426,10 +426,9 @@ Los principales endpoints de la API se detallan a continuación:
 
 ```json
 {
-    "error": "Actor already exists"
+  "error": "Actor already exists"
 }
 ```
-
 
 ## Get Users
 
@@ -439,7 +438,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ### Requisito de autenticacion
 
-- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder. 
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
 
 #### Ejemplo de respuestas
 
@@ -475,3 +474,67 @@ Los principales endpoints de la API se detallan a continuación:
   "error": "Internal server error while getting actors"
 }
 ```
+
+## Update Actors
+
+- **Method:** `PUT`
+- **Path:** `/actors/:actorId`
+- **Description:** Este endpoint permite a los usuarios administradores el poder editar la informacion sobre algun actor dentro de la aplicacion.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+### Ejemplo de solicitud
+
+```json
+{
+  "name": "zoro",
+  "biography": "biografia editada"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2024-12-29T00:51:51.025Z"
+  },
+  "_id": "67709d272093474048327ff6",
+  "name": "zoro",
+  "age": 30,
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
+  "biography": "biografia editada",
+  "movies": [],
+  "updateFor": [
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2024-12-29T01:02:33.082Z",
+      "_id": "67709fa91b5ef52df5fc08d2"
+    },
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2024-12-29T01:04:15.507Z",
+      "_id": "6770a00f1b5ef52df5fc08e5"
+    }
+  ],
+  "createdAt": "2024-12-29T00:51:51.038Z",
+  "updatedAt": "2024-12-29T01:04:15.507Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Actor not existing"
+}
+```
+
