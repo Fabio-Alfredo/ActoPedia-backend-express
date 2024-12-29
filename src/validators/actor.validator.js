@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 export const createActorValidator = [
   body("name")
@@ -37,7 +37,7 @@ export const updateActorValidator = [
 ];
 
 export const getActorValidator = [
-  body("actorId")
+  param("actorId")
     .notEmpty()
     .withMessage("Actor id is required")
     .isMongoId()

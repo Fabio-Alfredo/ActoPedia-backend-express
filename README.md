@@ -538,3 +538,54 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
+## Get User By Id
+
+- **Method:** `GET`
+- **Path:** `/users/:userId`
+- **Description:** Este metodo permite obtener toda la informacion de un actor a partir del `id` del mismo.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2024-12-29T00:51:51.025Z"
+  },
+  "_id": "67709d272093474048327ff6",
+  "name": "zoro",
+  "age": 30,
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
+  "biography": "biografia editada",
+  "movies": [],
+  "updateFor": [
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2024-12-29T01:02:33.082Z",
+      "_id": "67709fa91b5ef52df5fc08d2"
+    },
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2024-12-29T01:04:15.507Z",
+      "_id": "6770a00f1b5ef52df5fc08e5"
+    }
+  ],
+  "createdAt": "2024-12-29T00:51:51.038Z",
+  "updatedAt": "2024-12-29T01:04:15.507Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "errors": ["Actor id must be a valid mongo id"]
+}
+```
