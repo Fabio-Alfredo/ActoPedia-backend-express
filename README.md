@@ -103,12 +103,12 @@ node --wathc app.js
 
 Los principales endpoints de la API se detallan a continuación:
 
-## Endpoints para autenticacion /auth
+## Endpoints para autenticacion
 
 ## Registro de usuario
 
 - **Method:** `POST`
-- **Path:** `/register`
+- **Path:** `/auth/register`
 - **Description:** Este endpoint permite el registro de nuevos usuarios dentro de la aplicacion
 
 #### Ejemplo de Solicitud
@@ -142,7 +142,7 @@ Los principales endpoints de la API se detallan a continuación:
 ## Login de usuario
 
 - **Method:** `POST`
-- **Path:** `/login`
+- **Path:** `/auth/login`
 - **Description:** Este endpoint permite el inicio de sesión seguro para un usuario previamente registrado, permitiendo iniciar sesión ya sea con su dirección de correo electrónico o su nombre de usuario.
 
 #### Ejemplo de solicitud
@@ -176,7 +176,7 @@ Los principales endpoints de la API se detallan a continuación:
 ## Update Password
 
 - **Method:** `PATCH`
-- **Path:** `/password/:userId`
+- **Path:** `/auth/password/:userId`
 - **Description:** Este endpoint permite al usuario cambiar su contraseña proporcionando su contraseña actual y estableciendo una nueva.
 
 ### Requisito de autenticacion
@@ -213,7 +213,7 @@ Los principales endpoints de la API se detallan a continuación:
 ## Recovery Password
 
 - **Method:** `POST`
-- **Path:** `/recover-password`
+- **Path:** `/auth/recover-password`
 - **Description:** Este método permite a los usuarios recuperar su contraseña olvidada. Se envía un correo electrónico con una contraseña temporal, y posteriormente se puede utilizar el endpoint de actualización de contraseña para establecer una nueva segura.
 
 ### Ejemplo de solicitud
@@ -243,10 +243,12 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
+## Endpoints para usuarios
+
 ## Update Role
 
 - **Method:** `PATCH`
-- **Path:** `/role/:userId`
+- **Path:** `/users/role/:userId`
 - **Description:** Este método permite asignar roles a los usuarios, el `id` del usuario a editar debe ser enviado por params ademas si el usuario ya contiene dicho rol sera removido. Sólo puede ser accesado por usuarios con roles de mayor rango.
 
 ### Requisito de autenticacion
@@ -283,7 +285,7 @@ Los principales endpoints de la API se detallan a continuación:
 ## Update State
 
 - **Method:** `PATCH`
-- **Path:** `/state/:userId`
+- **Path:** `/users/state/:userId`
 - **Description:** Este metodo permite bloquear a los usuarios que realicen acciones indevidas dentor de la aplicacion, el `id` del usuario a bloquar debe ser enviado por params, puede ser accesido por roles de mayor rango.
 
 ### Requisito de autenticacion
@@ -320,13 +322,13 @@ Los principales endpoints de la API se detallan a continuación:
 ## Get Users
 
 - **Method:** `PATCH`
-- **Path:** `/state/:userId`
+- **Path:** `/users/state/:userId`
 - **Description:** Este metodo permite obtener toda la informacion de todos los usuarios registrados dentro de la aplicacion.
 
 ### Requisito de autenticacion
 
 - **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
-- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar los usuarios. Si el usuario no tiene el rol correcto, se devolverá un error.
 
 #### Ejemplo de respuestas
 
@@ -370,5 +372,106 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
   "error": "Internal server error while fetching users"
+}
+```
+
+## Endpoints para actores
+
+## Crear actor
+
+- **Method:** `POST`
+- **Path:** `/actors/create`
+- **Description:** Este endpoint permite la creacion de nuevos actores dentro de la aplicacion
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol maximo para poder crear nuevos actores. Si el usuario no tiene el rol correcto.
+
+#### Ejemplo de Solicitud
+
+```json
+{
+  "name": "actor",
+  "age": "30",
+  "image": file.image,
+  "biography":"biografia que tiene este actor"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitoso:**
+
+```json
+{
+    "name": "one piece",
+    "age": 30,
+    "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
+    "biography": "Esta es una pelicula de one piece que se pone veregona desde el inicio",
+    "createFor": {
+        "user": "6764cb5c3481682095e6b427",
+        "date": "2024-12-29T00:51:51.025Z"
+    },
+    "_id": "67709d272093474048327ff6",
+    "movies": [],
+    "updateFor": [],
+    "createdAt": "2024-12-29T00:51:51.038Z",
+    "updatedAt": "2024-12-29T00:51:51.038Z",
+    "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "Actor already exists"
+}
+```
+
+
+## Get Users
+
+- **Method:** `PATCH`
+- **Path:** `/users/getActors`
+- **Description:** Este metodo permite obtener toda la informacion de todos los actores almacenados dentro de la aplicacion.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder. 
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+   [
+    {
+        "createFor": {
+            "user": "6764cb5c3481682095e6b427",
+            "date": "2024-12-29T00:51:51.025Z"
+        },
+        "_id": "67709d272093474048327ff6",
+        "name": "one piece",
+        "age": 30,
+        "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1735433510/actors/actors/1735433509846.jpg",
+        "biography": "Esta es una pelicula de one piece que se pone veregona desde el inicio",
+        "movies": [],
+        "updateFor": [],
+        "createdAt": "2024-12-29T00:51:51.038Z",
+        "updatedAt": "2024-12-29T00:51:51.038Z",
+        "__v": 0
+    }
+]
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Internal server error while getting actors"
 }
 ```

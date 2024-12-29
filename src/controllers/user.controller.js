@@ -29,7 +29,7 @@ export const updateStateInUser = async (req, res, next) => {
     const userId = req.params.userId;
     const { state } = req.body;
     const newUser = await userService.updateStateUser(userId, state, admin);
-    res.status(201).json({ message: "User blocked successfully" });
+    res.status(201).json({ message: "Update state successfully" });
   } catch (e) {
     switch (e.code) {
       case errorCodes.USER.NOT_FOUND:
