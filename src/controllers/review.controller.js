@@ -48,7 +48,7 @@ export const deleteReview = async (req, res, next)=>{
         const reviewId = req.params.reviewId;
         const user = req.user;
         await reviewService.deleteReview(reviewId, user);
-        res.status(204).json({message: 'Review deleted'});
+        res.status(202).json({message: 'Review deleted'});
     }catch(e){
         switch(e){
             case errorCodes.REVIEW.NOT_FOUND:

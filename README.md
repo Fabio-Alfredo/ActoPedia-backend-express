@@ -83,8 +83,6 @@ COMPANY_PASSWORD_EMAIL=your_email_password  # Contraseña del correo oficial.
 
 Instrucciones para arrancar el servidor:
 
-### Uso
-
 Para iniciar el servidor en modo desarrollo:
 
 1.
@@ -173,7 +171,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Update Password
+## Cambiar Contraseña
 
 - **Method:** `PATCH`
 - **Path:** `/auth/password/:userId`
@@ -210,7 +208,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Recovery Password
+## Recuperar Contraseña
 
 - **Method:** `POST`
 - **Path:** `/auth/recover-password`
@@ -245,7 +243,7 @@ Los principales endpoints de la API se detallan a continuación:
 
 ## Endpoints para usuarios
 
-## Update Role
+## Cambiar Role
 
 - **Method:** `PATCH`
 - **Path:** `/users/role/:userId`
@@ -282,7 +280,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Update State
+## Cambiar Estado del usuario
 
 - **Method:** `PATCH`
 - **Path:** `/users/state/:userId`
@@ -319,7 +317,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Get Users
+## Obtener los Usuarios
 
 - **Method:** `PATCH`
 - **Path:** `/users/state/:userId`
@@ -386,7 +384,7 @@ Los principales endpoints de la API se detallan a continuación:
 ### Requisito de autenticacion
 
 - **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
-- **Roles permitidos:** El usuario debe tener el rol maximo para poder crear nuevos actores. Si el usuario no tiene el rol correcto.
+- **Roles permitidos:** El usuario debe tener el rol maximo para poder crear nuevos actores. Si el usuario no tiene el rol correcto, se devolvera un error.
 
 #### Ejemplo de Solicitud
 
@@ -430,9 +428,9 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Get Actors
+## Obtener los Actores
 
-- **Method:** `PATCH`
+- **Method:** `GET`
 - **Path:** `/users/getActors`
 - **Description:** Este metodo permite obtener toda la informacion de todos los actores almacenados dentro de la aplicacion.
 
@@ -475,7 +473,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Update Actor
+## Actualizar un Actor
 
 - **Method:** `PUT`
 - **Path:** `/actors/:actorId`
@@ -538,7 +536,7 @@ Los principales endpoints de la API se detallan a continuación:
 }
 ```
 
-## Get Actor By Id
+## Obtener un actor por id
 
 - **Method:** `GET`
 - **Path:** `/users/:userId`
@@ -587,5 +585,426 @@ Los principales endpoints de la API se detallan a continuación:
 ```json
 {
   "errors": ["Actor id must be a valid mongo id"]
+}
+```
+
+## Endpoints para peliculas
+
+## Crear pelicula
+
+- **Method:** `POST`
+- **Path:** `/movies/create`
+- **Description:** Este endpoint permite la creacion de nuevas peliculas dentro de la aplicacion
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+- **Roles permitidos:** El usuario debe tener el rol maximo para poder crear nuevas peliculas. Si el usuario no tiene el rol correcto, se devolvera un error.
+
+#### Ejemplo de Solicitud (form-data)
+
+La solicitud debe enviarse con el tipo de contenido **multipart/form-data**.
+
+| Campo         | Tipo   | Descripción                              |
+| ------------- | ------ | ---------------------------------------- |
+| `title`       | String | Titulo de la pelicula                    |
+| `director`    | String | Director de dicha pelicula               |
+| `description` | String | Descripcion de la pelicula               |
+| `year`        | Int    | Año de creacion de la pelicula           |
+| `genero`      | String | Genero que define a dicha pelicula       |
+| `image`       | File   | Imagen que representa la pelicula (file) |
+
+#### Ejemplo de respuestas
+
+- **Exitoso:**
+
+```json
+{
+  "title": "primero",
+  "director": "fabio",
+  "reviews": [],
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1740675838/movies/movies/1740675837548.jpg",
+  "description": "un texto",
+  "year": 2002,
+  "genero": "adventure",
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2025-02-27T17:03:58.962Z"
+  },
+  "_id": "67c09afefe07a2ffe2194e10",
+  "actors": [],
+  "updateFor": [],
+  "createdAt": "2025-02-27T17:03:58.977Z",
+  "updatedAt": "2025-02-27T17:03:58.977Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Movie already exists"
+}
+```
+
+## Obtener peliculas
+
+- **Method:** `GET`
+- **Path:** `/movies/getMovies`
+- **Description:** Este metodo permite obtener toda la informacion de todas las peliculas almacenadas dentro de la aplicacion.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  [
+      {
+          "createFor": {
+              "user": "6764cb5c3481682095e6b427",
+              "date": "2025-02-27T17:03:58.962Z"
+          },
+          "_id": "67c09afefe07a2ffe2194e10",
+          "title": "primero",
+          "director": "fabio",
+          "reviews": [],
+          "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1740675838/movies/movies/1740675837548.jpg",
+          "description": "un texto",
+          "year": 2002,
+          "genero": "adventure",
+          "actors": [],
+          "updateFor": [],
+          "createdAt": "2025-02-27T17:03:58.977Z",
+          "updatedAt": "2025-02-27T17:03:58.977Z",
+          "__v": 0
+      }
+  ]
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Internal server error while getting movies"
+}
+```
+
+## Añadir Actores en pelicula
+
+- **Method:** `PUT`
+- **Path:** `/movies/addActor/:movieId`
+- **Description:** Este endpoint permite a los usuarios poder editar los personajes de una pelicula añadiendo una lista de personajes.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+### Ejemplo de solicitud
+
+```json
+{
+  "personajes": [
+    {
+      "actorId": "67c09ea83a14f442864721e5",
+      "personaje": "Un bandido"
+    }
+  ]
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2025-02-27T17:03:58.962Z"
+  },
+  "_id": "67c09afefe07a2ffe2194e10",
+  "title": "primero",
+  "director": "fabio",
+  "reviews": [],
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1740675838/movies/movies/1740675837548.jpg",
+  "description": "un texto",
+  "year": 2002,
+  "genero": "adventure",
+  "actors": [
+    {
+      "actor": "67c09ea83a14f442864721e5",
+      "personaje": "un dog",
+      "_id": "67c09eb93a14f442864721f2"
+    }
+  ],
+  "updateFor": [],
+  "createdAt": "2025-02-27T17:03:58.977Z",
+  "updatedAt": "2025-02-27T17:19:53.909Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "errors": ["Each 'actorId' must be a valid Mongo ID"]
+}
+```
+
+## Actualizar Pelicula
+
+- **Method:** `PUT`
+- **Path:** `/movies/:movieId`
+- **Description:** Este endpoint permite a los usuarios administradores el poder editar la informacion sobre alguna pelicula dentro de la aplicacion, editara solo los campos enviados.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+- **Roles permitidos:** El usuario debe tener el rol maximo para recuperar la contraseña. Si el usuario no tiene el rol correcto, se devolverá un error.
+
+### Ejemplo de solicitud
+
+```json
+{
+  "title": "El oso"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2025-02-27T17:03:58.962Z"
+  },
+  "_id": "67c09afefe07a2ffe2194e10",
+  "title": "El oso",
+  "director": "fabio",
+  "reviews": [],
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1740675838/movies/movies/1740675837548.jpg",
+  "description": "un texto",
+  "year": 2002,
+  "genero": "adventure",
+  "actors": [
+    {
+      "actor": "67c09ea83a14f442864721e5",
+      "personaje": "un dog",
+      "_id": "67c09eb93a14f442864721f2"
+    }
+  ],
+  "updateFor": [
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2025-02-27T17:28:30.808Z",
+      "_id": "67c0a0be3a14f44286472203"
+    }
+  ],
+  "createdAt": "2025-02-27T17:03:58.977Z",
+  "updatedAt": "2025-02-27T17:28:30.809Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "errors": ["Title must be string"]
+}
+```
+
+## Obtener pelicula por id
+
+- **Method:** `GET`
+- **Path:** `/movies/:movieId`
+- **Description:** Este metodo permite obtener toda la informacion de una pelicula a partir del `id` de la misma.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "createFor": {
+    "user": "6764cb5c3481682095e6b427",
+    "date": "2025-02-27T17:03:58.962Z"
+  },
+  "_id": "67c09afefe07a2ffe2194e10",
+  "title": "El oso",
+  "director": "fabio",
+  "reviews": ["67c0a359814b0be97387ca22"],
+  "image": "https://res.cloudinary.com/dosctrwix/image/upload/v1740675838/movies/movies/1740675837548.jpg",
+  "description": "un texto",
+  "year": 2002,
+  "genero": "adventure",
+  "actors": [
+    {
+      "actor": "67c09ea83a14f442864721e5",
+      "personaje": "un dog",
+      "_id": "67c09eb93a14f442864721f2"
+    }
+  ],
+  "updateFor": [
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2025-02-27T17:28:30.808Z",
+      "_id": "67c0a0be3a14f44286472203"
+    },
+    {
+      "user": "6764cb5c3481682095e6b427",
+      "date": "2025-02-27T17:30:01.879Z",
+      "_id": "67c0a1193a14f44286472210"
+    }
+  ],
+  "createdAt": "2025-02-27T17:03:58.977Z",
+  "updatedAt": "2025-02-27T17:39:37.661Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Token is required"
+}
+```
+
+## Endpoints para Reviews
+
+## Crear review
+
+- **Method:** `POST`
+- **Path:** `/reviews/create`
+- **Description:** Este endpoint permite la creacion de nuevas reviews para una pelicula.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+#### Ejemplo de Solicitud
+
+```json
+{
+  "content": "La pelicula esta chida",
+  "qualification": 2,
+  "movie": "67c09afefe07a2ffe2194e10"
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitoso:**
+
+```json
+{
+  "content": "La pelicula esta chida",
+  "qualification": 2,
+  "user": "6764cb5c3481682095e6b427",
+  "movie": "67c09afefe07a2ffe2194e10",
+  "_id": "67c0a359814b0be97387ca22",
+  "createdAt": "2025-02-27T17:39:37.518Z",
+  "updatedAt": "2025-02-27T17:39:37.518Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "error": "Token is required"
+}
+```
+
+## Actualizar Review
+
+- **Method:** `PUT`
+- **Path:** `/movies/:movieId`
+- **Description:** Este endpoint permite a un usuario poder editar el comentarios que registro sobre una pelicula.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+### Ejemplo de solicitud
+
+```json
+{
+  "content": "aqui va otro texto veda ",
+  "qualification": 2
+}
+```
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+```json
+{
+  "_id": "67c0a359814b0be97387ca22",
+  "content": "Esta pelicula esta mas que chida le subo puntos ",
+  "qualification": 5,
+  "user": "6764cb5c3481682095e6b427",
+  "movie": "67c09afefe07a2ffe2194e10",
+  "createdAt": "2025-02-27T17:39:37.518Z",
+  "updatedAt": "2025-02-27T17:47:03.910Z",
+  "__v": 0
+}
+```
+
+- **Error:**
+
+```json
+{
+  "errors": ["qualification must be a number"]
+}
+```
+
+## Eliminar Review
+
+- **Method:** `Delete`
+- **Path:** `/reviews/delete/:movieId`
+- **Description:** Este endpoint permite a un usuario poder eliminar un comentario que alla generado sobre una pelicula.
+
+### Requisito de autenticacion
+
+- **Autenticación:** Requiere estar logueado. La solicitud debe incluir un token de `JWT` válido para proceder.
+
+
+#### Ejemplo de respuestas
+
+- **Exitosa:**
+
+
+```json
+{
+  "message": "Review deleted"
+}
+```
+
+- **Error:**
+
+```json
+{
+    "error": "Review not existing"
 }
 ```

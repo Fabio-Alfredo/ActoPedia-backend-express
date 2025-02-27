@@ -73,6 +73,7 @@ export const updateMovieValidator = [
   body("title")
     .optional()
     .isString()
+    .withMessage("Title must be string")
     .notEmpty()
     .withMessage("Title is required")
     .bail(),
