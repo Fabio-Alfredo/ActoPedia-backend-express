@@ -11,7 +11,7 @@ Actopedia ofrece un sistema de inicio de sesión seguro mediante JSON Web Token 
 1.  Clona el repositorio
 
 ```bash
-git clone fjldsfjaldsfjasdf
+git clone https://github.com/Fabio-Alfredo/ActoPedia-backend-express.git
 ```
 
 2.  Ve al direcctorio del proyecto
